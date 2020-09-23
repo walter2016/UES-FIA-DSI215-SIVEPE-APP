@@ -1,10 +1,9 @@
+import 'package:com_app_tienda/LoginPage.dart';
 import 'package:com_app_tienda/pages/home_page.dart';
 import 'package:com_app_tienda/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
-
-import 'LoginPage.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override

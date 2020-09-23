@@ -1,3 +1,4 @@
+import 'package:com_app_tienda/pages/RegisterPage.dart';
 import 'package:com_app_tienda/pages/home_page.dart';
 import 'package:com_app_tienda/utilities/constants.dart';
 import 'package:flutter/material.dart';
@@ -218,7 +219,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
+      onTap: () => Navigator.push(
+          context,
+          PageTransition(
+              type: PageTransitionType.fade, child: RegisterScreen())),
       child: RichText(
         text: TextSpan(
           children: [
