@@ -69,7 +69,16 @@ class FirstTabState extends State<FirstTab>
                 }
               },
             ),
-            Text("PROXIMAMENTE"),
+            FutureBuilder<List<Product>>(
+              future: getProductos(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return _ListProduct(snapshot.data);
+                }
+              },
+            ),
             FutureBuilder<List<Product>>(
               future: getProductos(),
               builder: (context, snapshot) {
@@ -133,7 +142,7 @@ class _ListProduct extends StatelessWidget {
         child: GridView.builder(
             itemCount: products.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
+              crossAxisCount: 2,
               mainAxisSpacing: 5,
               crossAxisSpacing: 5,
               childAspectRatio: 0.60,
