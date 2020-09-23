@@ -1,4 +1,4 @@
-import 'package:com_app_tienda/pages/RegisterPage.dart';
+import 'package:com_app_tienda/RegisterPage.dart';
 import 'package:com_app_tienda/pages/home_page.dart';
 import 'package:com_app_tienda/utilities/constants.dart';
 import 'package:flutter/material.dart';

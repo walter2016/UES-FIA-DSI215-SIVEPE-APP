@@ -11,8 +11,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreen extends State<RegisterScreen> {
-  bool _rememberMe = false;
-
   Widget _buildNameTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
