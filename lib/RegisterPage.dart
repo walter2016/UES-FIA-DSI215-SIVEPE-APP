@@ -1,9 +1,10 @@
-import 'package:com_app_tienda/LoginPage.dart';
 import 'package:com_app_tienda/pages/home_page.dart';
 import 'package:com_app_tienda/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
+
+import 'LoginPage.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _RegisterScreen extends State<RegisterScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
-            keyboardType: TextInputType.emailAddress,
+            keyboardType: TextInputType.name,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',

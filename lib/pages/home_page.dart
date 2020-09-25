@@ -1,3 +1,4 @@
+import 'package:com_app_tienda/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 
 import 'home_tab_page.dart';
@@ -40,10 +41,12 @@ class _HomePageState extends State<HomePage>
           appBar: buildAppBar(),
           body: TabBarView(
             children: <Widget>[
+              //para pruebas se comenta el FirstTab(),
+              //Text('Hola Mundo'),
               FirstTab(),
-              MyBody("Page Two"),
+              Text('Hola Mundo'),
               MyBody("Page Three"),
-              MyBody("Page FOR")
+              ProfilePage(),
             ],
 // if you want yo disable swiping in tab the use below code
 //            physics: NeverScrollableScrollPhysics(),

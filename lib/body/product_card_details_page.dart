@@ -11,7 +11,7 @@ class DetalleProductos extends StatelessWidget {
       // each product have a color
       backgroundColor: Colors.amber,
       appBar: buildAppBar(context),
-      body: Text('hola'),
+      body: Text('PROXIMAMENTE'),
     );
   }
 
