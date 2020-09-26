@@ -1,8 +1,12 @@
 import 'package:com_app_tienda/RegisterPage.dart';
+import 'package:com_app_tienda/Users/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:com_app_tienda/Users/blocs/authentication_bloc/authentication_event.dart';
+import 'package:com_app_tienda/Users/blocs/authentication_bloc/authentication_state.dart';
 import 'package:com_app_tienda/pages/home_page.dart';
 import 'package:com_app_tienda/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,7 +15,19 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  AuthenticationBloc authenticationBloc;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool _rememberMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    // This event will load the authentication state
+    authenticationBloc.add(AppStarted());
+  }
 
   Widget _buildEmailTF() {
     return Column(
@@ -27,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: emailController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -62,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: passwordController,
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -130,8 +148,14 @@ class _LoginScreenState extends State<LoginScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => Navigator.push(context,
-            PageTransition(type: PageTransitionType.fade, child: HomePage())),
+        onPressed: () {
+          final String email = emailController.text;
+          final String password = passwordController.text;
+          authenticationBloc
+              .add(LoginRequest(email: email, password: password));
+          /*Navigator.push(context,
+              PageTransition(type: PageTransitionType.fade, child: HomePage()));*/
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -248,71 +272,108 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget _buildLoginPage(BuildContext context) {
+    return Scaffold(
+      body: Builder(
+        builder: (BuildContext context) {
+          return BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (BuildContext context, AuthenticationState state) {
+              if (state is Unauthenticated) {
+                Scaffold.of(context).showSnackBar(SnackBar(content: Text(state.reason)));
+                return;
+              }
+              if (state is Authenticated) {
+                Navigator.pushReplacementNamed(context, "/home");
+              }
+            },
+            child: AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle.light,
+            child: GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xFFff9100),
+                          Color(0xFFFF9800),
+                          Color(0xFFffab40),
+                        ],
+                        stops: [0.1, 0.4, 0.9],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: double.infinity,
+                    child: SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 40.0,
+                        vertical: 90.0,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Iniciar Sesión',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 20.0),
+                          _buildEmailTF(),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          _buildPasswordTF(),
+                          _buildForgotPasswordBtn(),
+                          _buildRememberMeCheckbox(),
+                          _buildLoginBtn(),
+                          _buildSignInWithText(),
+                          _buildSocialBtnRow(),
+                          _buildSignupBtn(),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildLoading() {
+    return Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFFff9100),
-                      Color(0xFFFF9800),
-                      Color(0xFFffab40),
-                    ],
-                    stops: [0.1, 0.4, 0.9],
-                  ),
-                ),
-              ),
-              Container(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 90.0,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Iniciar Secion',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 20.0),
-                      _buildEmailTF(),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
-                      _buildRememberMeCheckbox(),
-                      _buildLoginBtn(),
-                      _buildSignInWithText(),
-                      _buildSocialBtnRow(),
-                      _buildSignupBtn(),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+      builder: (BuildContext context, AuthenticationState state) {
+        if (state is Uninitialized) {
+          return _buildLoading();
+        }
+        if (state is Authenticated) {
+          return HomePage();
+        }
+        return _buildLoginPage(context);
+      },
     );
   }
 }
