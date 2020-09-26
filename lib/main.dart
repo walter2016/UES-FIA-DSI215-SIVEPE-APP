@@ -1,10 +1,43 @@
 import 'package:com_app_tienda/Animations/FadeAnimation.dart';
 import 'package:com_app_tienda/LoginPage.dart';
+import 'package:com_app_tienda/Users/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:com_app_tienda/Users/resources/user_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
+import './pages/home_page.dart' as page;
 
-void main() =>
-    runApp(MaterialApp(debugShowCheckedModeBanner: false, home: HomePage()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final UserRepository userRepository = UserRepository(firebaseAuth: firebaseAuth);
+  return runApp(BlocProvider(
+    create: (BuildContext context) =>
+        AuthenticationBloc(userRepository: userRepository),
+    child: App(),
+  ));
+}
+
+class App extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+      routes: {
+        "/login": (BuildContext context) {
+          return LoginScreen();
+        },
+        "/home": (BuildContext context) {
+          return page.HomePage();
+        }
+      },
+    );
+  }
+}
 
 class HomePage extends StatefulWidget {
   @override

@@ -1,8 +1,12 @@
 import 'package:com_app_tienda/LoginPage.dart';
+import 'package:com_app_tienda/Users/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:com_app_tienda/Users/blocs/authentication_bloc/authentication_event.dart';
+import 'package:com_app_tienda/Users/blocs/authentication_bloc/authentication_state.dart';
 import 'package:com_app_tienda/pages/home_page.dart';
 import 'package:com_app_tienda/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -11,6 +15,18 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreen extends State<RegisterScreen> {
+  AuthenticationBloc authenticationBloc;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    super.initState();
+  }
+
   Widget _buildNameTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,6 +41,7 @@ class _RegisterScreen extends State<RegisterScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: nameController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -60,6 +77,7 @@ class _RegisterScreen extends State<RegisterScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: emailController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -95,6 +113,7 @@ class _RegisterScreen extends State<RegisterScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: passwordController,
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -122,8 +141,24 @@ class _RegisterScreen extends State<RegisterScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => Navigator.push(context,
-            PageTransition(type: PageTransitionType.fade, child: HomePage())),
+        onPressed: () {
+          if (emailController.text.isEmpty) {
+            authenticationBloc.add(LoginError('El correo está vacio'));
+            return;
+          }
+          if (nameController.text.isEmpty) {
+            authenticationBloc.add(LoginError('El nombre es requerido'));
+            return;
+          }
+          if (passwordController.text.isEmpty) {
+            authenticationBloc.add(LoginError('La contraseña está vacia'));
+            return;
+          }
+          authenticationBloc.add(RegisterUserWithEmail(
+              name: nameController.text,
+              password: passwordController.text,
+              email: emailController.text));
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -241,69 +276,83 @@ class _RegisterScreen extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFFff9100),
-                      Color(0xFFFF9800),
-                      Color(0xFFffab40),
-                    ],
-                    stops: [0.1, 0.4, 0.9],
-                  ),
-                ),
-              ),
-              Container(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 90.0,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Registrate',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
+      body: Builder(
+        builder: (BuildContext context) {
+          return BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (BuildContext context, AuthenticationState state) {
+              if (state is Authenticated) {
+                print(state.user);
+                // Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: HomePage()));
+              } else if (state is Unauthenticated) {
+                print(state.reason);
+              }
+            },
+            child: AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle.light,
+              child: GestureDetector(
+                onTap: () => FocusScope.of(context).unfocus(),
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xFFff9100),
+                            Color(0xFFFF9800),
+                            Color(0xFFffab40),
+                          ],
+                          stops: [0.1, 0.4, 0.9],
                         ),
                       ),
-                      SizedBox(height: 20.0),
-                      _buildNameTF(),
-                      SizedBox(
-                        height: 20.0,
+                    ),
+                    Container(
+                      height: double.infinity,
+                      child: SingleChildScrollView(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 40.0,
+                          vertical: 90.0,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Registrate',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'OpenSans',
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 20.0),
+                            _buildNameTF(),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            _buildEmailTF(),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            _buildPasswordTF(),
+                            _buildRegisterBtn(),
+                            _buildSignInWithText(),
+                            _buildSocialBtnRow(),
+                            _buildSignupBtn(),
+                          ],
+                        ),
                       ),
-                      _buildEmailTF(),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      _buildPasswordTF(),
-                      _buildRegisterBtn(),
-                      _buildSignInWithText(),
-                      _buildSocialBtnRow(),
-                      _buildSignupBtn(),
-                    ],
-                  ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
-        ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

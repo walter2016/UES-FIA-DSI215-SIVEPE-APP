@@ -1,3 +1,4 @@
+import 'package:com_app_tienda/Users/ui/profile_tab.dart';
 import 'package:flutter/material.dart';
 
 import 'home_tab_page.dart';
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage>
               FirstTab(),
               MyBody("Page Two"),
               MyBody("Page Three"),
-              MyBody("Page FOR")
+              ProfileTab()
             ],
 // if you want yo disable swiping in tab the use below code
 //            physics: NeverScrollableScrollPhysics(),

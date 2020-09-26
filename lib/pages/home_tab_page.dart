@@ -103,6 +103,13 @@ class _ListCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (categories == null) {
+      return Container(
+        child: Center(
+          child: Text("No hay categorias"),
+        ),
+      );
+    }
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -136,6 +143,13 @@ class _ListProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(products == null) {
+      return Container(
+        child: Center(
+          child: Text("No hay productos"),
+        ),
+      );
+    }
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
