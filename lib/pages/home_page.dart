@@ -29,75 +29,67 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        //color: Hexcolor('#FF9800'),
-        theme: ThemeData(brightness: Brightness.light, accentColor: Colors.red),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-        ),
-        home: new Scaffold(
-          appBar: buildAppBar(),
-          body: TabBarView(
-            children: <Widget>[
-              //para pruebas se comenta el FirstTab(),
-              //Text('Hola Mundo'),
-              FirstTab(),
-              Text('Hola Mundo'),
-              MyBody("Page Three"),
-              ProfilePage(),
-            ],
+    return Scaffold(
+      appBar: buildAppBar(),
+      body: TabBarView(
+        children: <Widget>[
+          //para pruebas se comenta el FirstTab(),
+          //Text('Hola Mundo'),
+          FirstTab(),
+          Text('Hola Mundo'),
+          MyBody("Page Three"),
+          ProfilePage(),
+        ],
 // if you want yo disable swiping in tab the use below code
 //            physics: NeverScrollableScrollPhysics(),
-            controller: tabController,
-          ),
-          bottomNavigationBar: Material(
-            color: Color(0xFFFF9800),
-            child: TabBar(
-              onTap: (indedx) {
-                if (indedx == 0) {
-                  setState(() {
-                    title = "Home";
-                  });
-                } else if (indedx == 1) {
-                  setState(() {
-                    title = "Wishlist";
-                  });
-                } else if (indedx == 2) {
-                  setState(() {
-                    title = "Cart";
-                  });
-                } else if (indedx == 3) {
-                  setState(() {
-                    title = "Account";
-                  });
-                }
-              },
-              indicatorColor: Colors.white,
-              unselectedLabelColor: Colors.white,
-              tabs: <Widget>[
-                Tab(
-                  icon: Icon(Icons.home),
-                  text: "Home",
-                ),
-                Tab(
-                  icon: Icon(Icons.favorite),
-                  text: "Wishlist",
-                ),
-                Tab(
-                  icon: Icon(Icons.shopping_cart),
-                  text: "Cart",
-                ),
-                Tab(
-                  icon: Icon(Icons.account_circle),
-                  text: "Account",
-                ),
-              ],
-              controller: tabController,
+        controller: tabController,
+      ),
+      bottomNavigationBar: Material(
+        color: Color(0xFFFF9800),
+        child: TabBar(
+          onTap: (indedx) {
+            if (indedx == 0) {
+              setState(() {
+                title = "Home";
+              });
+            } else if (indedx == 1) {
+              setState(() {
+                title = "Wishlist";
+              });
+            } else if (indedx == 2) {
+              setState(() {
+                title = "Cart";
+              });
+            } else if (indedx == 3) {
+              setState(() {
+                title = "Account";
+              });
+            }
+          },
+          indicatorColor: Colors.white,
+          unselectedLabelColor: Colors.white,
+          tabs: <Widget>[
+            Tab(
+              icon: Icon(Icons.home),
+              text: "Home",
             ),
-          ),
-        ));
+            Tab(
+              icon: Icon(Icons.favorite),
+              text: "Wishlist",
+            ),
+            Tab(
+              icon: Icon(Icons.shopping_cart),
+              text: "Cart",
+            ),
+            Tab(
+              icon: Icon(Icons.account_circle),
+              text: "Account",
+            ),
+          ],
+          controller: tabController,
+        ),
+      ),
+    );
   }
 
   AppBar buildAppBar() {
