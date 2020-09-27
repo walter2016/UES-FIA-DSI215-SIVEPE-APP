@@ -30,7 +30,7 @@ class ListaProductos extends StatelessWidget {
               ),
               child: Hero(
                 tag: Colors.amber,
-                child: Image.asset(product.image),
+                child: Image.asset(product.imagenUrl),
               ),
             ),
           ),
@@ -38,7 +38,7 @@ class ListaProductos extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20 / 4),
             child: Text(
               // products is out demo list
-              product.title,
+              product.nombre,
               style: TextStyle(color: Color(0xFFACACAC)),
             ),
           ),
@@ -51,7 +51,7 @@ class ListaProductos extends StatelessWidget {
                 width: 50,
               ),
               Text(
-                product.price.toString(),
+                product.precio.toString(),
                 style: TextStyle(fontWeight: FontWeight.bold),
               )
             ],

@@ -30,7 +30,7 @@ class ListaCategorias extends StatelessWidget {
               ),
               child: Hero(
                 tag: category.id,
-                child: Image.asset(category.image),
+                child: Text('IMAGEN'),
               ),
             ),
           ),
@@ -39,7 +39,7 @@ class ListaCategorias extends StatelessWidget {
                 const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
             child: Text(
               // products is out demo list
-              category.title,
+              category.nombre,
               style: TextStyle(color: Color(0xFFACACAC)),
             ),
           ),

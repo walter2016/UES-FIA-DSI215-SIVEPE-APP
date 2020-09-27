@@ -9,39 +9,31 @@ String productToJson(List<Product> data) =>
 class Product {
   Product({
     this.id,
-    this.image,
-    this.title,
-    this.price,
-    this.description,
-    this.size,
-    this.color,
+    this.imagenUrl,
+    this.nombre,
+    this.precio,
+    this.estado,
   });
 
   int id;
-  String image;
-  String title;
-  int price;
-  String description;
-  int size;
-  String color;
+  String imagenUrl;
+  String nombre;
+  int precio;
+  String estado;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
-        image: json["image"],
-        title: json["title"],
-        price: json["price"],
-        description: json["description"],
-        size: json["size"],
-        color: json["color"],
+        imagenUrl: json["imagenUrl"],
+        nombre: json["nombre"],
+        precio: json["precio"],
+        estado: json["estado"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "image": image,
-        "title": title,
-        "price": price,
-        "description": description,
-        "size": size,
-        "color": color,
+        "imagenUrl": imagenUrl,
+        "nombre": nombre,
+        "precio": precio,
+        "estado": estado,
       };
 }

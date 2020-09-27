@@ -154,7 +154,7 @@ class _AfiliacionState extends State<Afiliacion> {
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(0xFFFF9800),
-        title: const Text('File Picker example app'),
+        title: const Text('Afiliación'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -393,7 +393,7 @@ class _AfiliacionState extends State<Afiliacion> {
                                 title: Text('Directory path'),
                                 subtitle: Text(_directoryPath4),
                               )
-                            : _paths3 != null
+                            : _paths4 != null
                                 ? Container(
                                     padding:
                                         const EdgeInsets.only(bottom: 10.0),
