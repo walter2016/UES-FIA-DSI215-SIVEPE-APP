@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
-import '../authentication_bloc/authentication_event.dart';
-import '../authentication_bloc/authentication_state.dart';
-import '../../models/user_entity.dart';
-import '../../resources/user_repository.dart';
+import 'authentication_event.dart';
+import 'authentication_state.dart';
+import '../models/user_entity.dart';
+import '../resources/user_repository.dart';
 
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState>{
   final UserRepository userRepository;

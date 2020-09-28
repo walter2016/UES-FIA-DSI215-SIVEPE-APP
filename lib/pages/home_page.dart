@@ -1,3 +1,4 @@
+import 'package:com_app_tienda/Categories/ui/categories_tab.dart';
 import 'package:com_app_tienda/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,8 @@ class _HomePageState extends State<HomePage>
         children: <Widget>[
           //para pruebas se comenta el FirstTab(),
           //Text('Hola Mundo'),
-          FirstTab(),
+          //FirstTab(),
+          CategoriesTab(),
           Text('Hola Mundo'),
           MyBody("Page Three"),
           ProfilePage(),

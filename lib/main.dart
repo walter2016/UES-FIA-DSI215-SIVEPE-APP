@@ -1,6 +1,8 @@
 import 'package:com_app_tienda/Animations/FadeAnimation.dart';
+import 'package:com_app_tienda/Categories/bloc/categories_bloc.dart';
+import 'package:com_app_tienda/Categories/resources/category_repository.dart';
 import 'package:com_app_tienda/LoginPage.dart';
-import 'package:com_app_tienda/Users/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:com_app_tienda/Users/blocs/authentication_bloc.dart';
 import 'package:com_app_tienda/Users/resources/user_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,7 +19,10 @@ Future<void> main() async {
   return runApp(BlocProvider(
     create: (BuildContext context) =>
         AuthenticationBloc(userRepository: userRepository),
-    child: App(),
+    child: BlocProvider(
+      create: (BuildContext context) => CategoriesBloc(categoryRepository: CategoryRepository()),
+      child: App(),
+    ),
   ));
 }
 

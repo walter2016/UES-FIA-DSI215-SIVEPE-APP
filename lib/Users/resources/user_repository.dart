@@ -25,7 +25,7 @@ class UserRepository {
   Future<void> signInWithCredentials(String email, String password) async {
     return await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
-      password: password,
+      password: password
     );
   }
 
@@ -44,6 +44,8 @@ class UserRepository {
 
   Future<UserEntity> getUser() async {
     final User user = _firebaseAuth.currentUser;
+    String token = await user.getIdToken();
+    print(token);
     return await fromFirebaseUserToUserEntity(user);
   }
 
