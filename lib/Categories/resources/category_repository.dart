@@ -8,7 +8,7 @@ class CategoryRepository {
   final Dio dio = Dio(BaseOptions(baseUrl: kBaseUrl));
 
   Future<BuiltList<CategoryEntity>> getCategories() async {
-    final response = await dio.get('categories');
+    final response = await dio.get('categorias');
     final categories = deserializeListOf<CategoryEntity>(response.data);
     return categories;
   }

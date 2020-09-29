@@ -44,8 +44,6 @@ class UserRepository {
 
   Future<UserEntity> getUser() async {
     final User user = _firebaseAuth.currentUser;
-    String token = await user.getIdToken();
-    print(token);
     return await fromFirebaseUserToUserEntity(user);
   }
 

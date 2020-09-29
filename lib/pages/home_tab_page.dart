@@ -1,3 +1,4 @@
+import 'package:com_app_tienda/Categories/ui/categories_tab.dart';
 import 'package:com_app_tienda/Service/category_service.dart';
 import 'package:com_app_tienda/body/category_card_details_page.dart';
 import 'package:com_app_tienda/body/category_card_page.dart';
@@ -59,16 +60,7 @@ class FirstTabState extends State<FirstTab>
         ),
         body: TabBarView(
           children: [
-            FutureBuilder<List<Category>>(
-              future: getCategorias(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  return _ListCategory(snapshot.data);
-                }
-              },
-            ),
+            CategoriesTab(),
             FutureBuilder<List<Product>>(
               future: getProductos(),
               builder: (context, snapshot) {
@@ -103,36 +95,7 @@ class _ListCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (categories == null) {
-      return Container(
-        child: Center(
-          child: Text("No hay categorias"),
-        ),
-      );
-    }
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        child: GridView.builder(
-            itemCount: categories.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisSpacing: 5,
-              crossAxisSpacing: 5,
-              childAspectRatio: 0.60,
-            ),
-            itemBuilder: (context, index) => ListaCategorias(
-                  category: categories[index],
-                  press: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetalleCategoria(
-                          category: categories[index],
-                        ),
-                      )),
-                )),
-      ),
-    );
+    return Container();
   }
 }
 

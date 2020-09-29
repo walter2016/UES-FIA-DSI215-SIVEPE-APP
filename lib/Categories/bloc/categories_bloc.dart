@@ -11,7 +11,7 @@ class CategoriesBloc extends Bloc<CategoryEvent, CategoriesState> {
   Stream<CategoriesState> mapEventToState(CategoryEvent event) async* {
     if (event is LoadCategories) {
       yield* _mapLoadCategoriesToState(event);
-    } else if (event is CategoriesLoaded) {
+    } else if (event is LoadCategoriesSuccess) {
       yield* _mapCategoriesLoadSuccessToState(event);
     }
   }
