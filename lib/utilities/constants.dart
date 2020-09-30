@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 final kHintTextStyle = TextStyle(
   color: Colors.white54,
@@ -22,3 +23,6 @@ final kBoxDecorationStyle = BoxDecoration(
     ),
   ],
 );
+
+// In release mode this constant will be tree-shaked
+final kBaseUrl = kReleaseMode ? "http://ec2-34-239-124-79.compute-1.amazonaws.com/api/" : "http://192.168.1.4/api/";

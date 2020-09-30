@@ -1,6 +1,5 @@
 import 'package:com_app_tienda/pages/profile_page.dart';
 import 'package:flutter/material.dart';
-
 import 'home_tab_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,6 +34,7 @@ class _HomePageState extends State<HomePage>
         children: <Widget>[
           //para pruebas se comenta el FirstTab(),
           //Text('Hola Mundo'),
+          //FirstTab(),
           FirstTab(),
           Text('Hola Mundo'),
           MyBody("Page Three"),

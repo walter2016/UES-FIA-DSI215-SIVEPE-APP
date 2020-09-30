@@ -1,6 +1,6 @@
-import 'package:com_app_tienda/Users/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:com_app_tienda/Users/blocs/authentication_bloc/authentication_event.dart';
-import 'package:com_app_tienda/Users/blocs/authentication_bloc/authentication_state.dart';
+import 'package:com_app_tienda/Users/blocs/authentication_bloc.dart';
+import 'package:com_app_tienda/Users/blocs/authentication_event.dart';
+import 'package:com_app_tienda/Users/blocs/authentication_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

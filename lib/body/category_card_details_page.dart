@@ -1,8 +1,8 @@
-import 'package:com_app_tienda/models/Category.dart';
+import 'package:com_app_tienda/Categories/model/category_entity.dart';
 import 'package:flutter/material.dart';
 
 class DetalleCategoria extends StatelessWidget {
-  final Category category;
+  final CategoryEntity category;
 
   const DetalleCategoria({Key key, this.category}) : super(key: key);
   @override

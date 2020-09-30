@@ -1,8 +1,9 @@
+import 'package:com_app_tienda/Categories/model/category_entity.dart';
 import 'package:com_app_tienda/models/Category.dart';
 import 'package:flutter/material.dart';
 
 class ListaCategorias extends StatelessWidget {
-  final Category category;
+  final CategoryEntity category;
   final Function press;
   const ListaCategorias({
     Key key,
