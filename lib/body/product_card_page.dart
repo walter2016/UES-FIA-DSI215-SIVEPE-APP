@@ -1,8 +1,8 @@
-import 'package:com_app_tienda/models/Product.dart';
+import 'package:com_app_tienda/Products/model/product_entity.dart';
 import 'package:flutter/material.dart';
 
 class ListaProductos extends StatelessWidget {
-  final Product product;
+  final ProductEntity product;
   final Function press;
   const ListaProductos({
     Key key,
@@ -30,7 +30,7 @@ class ListaProductos extends StatelessWidget {
               ),
               child: Hero(
                 tag: Colors.amber,
-                child: Image.asset(product.imagenUrl),
+                child: Image.network(product.imagenUrl != null ? product.imagenUrl : 'https://via.placeholder.com/350x350'),
               ),
             ),
           ),
@@ -45,8 +45,8 @@ class ListaProductos extends StatelessWidget {
           Row(
             children: <Widget>[
               Image(
-                image: NetworkImage(
-                    'https://img.favpng.com/0/15/21/sales-logo-discounts-and-allowances-best-practice-png-favpng-ACrL1DqDEv4LYt8DszQ09fmHz.jpg'),
+                image: AssetImage(
+                    'assets/images/sale.jpg'),
                 height: 50,
                 width: 50,
               ),

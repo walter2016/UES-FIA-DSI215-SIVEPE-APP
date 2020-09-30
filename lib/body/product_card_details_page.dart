@@ -1,8 +1,8 @@
-import 'package:com_app_tienda/models/Product.dart';
+import 'package:com_app_tienda/Products/model/product_entity.dart';
 import 'package:flutter/material.dart';
 
 class DetalleProductos extends StatelessWidget {
-  final Product product;
+  final ProductEntity product;
 
   const DetalleProductos({Key key, this.product}) : super(key: key);
   @override

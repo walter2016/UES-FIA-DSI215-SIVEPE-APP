@@ -9,7 +9,6 @@ class CategoryRepository {
 
   Future<BuiltList<CategoryEntity>> getCategories() async {
     final response = await dio.get('categorias');
-    final categories = deserializeListOf<CategoryEntity>(response.data);
-    return categories;
+    return deserializeListOf<CategoryEntity>(response.data);
   }
 }
