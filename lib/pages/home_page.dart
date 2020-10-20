@@ -1,3 +1,6 @@
+import 'package:com_app_tienda/Cart/cart_page.dart';
+import 'package:com_app_tienda/WishList/favorites.dart';
+import 'package:com_app_tienda/body/DrawerWidget.dart';
 import 'package:com_app_tienda/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'home_tab_page.dart';
@@ -9,6 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TabController tabController;
 
   String title = "Home";
@@ -29,15 +33,14 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: DrawerWidget(),
       appBar: buildAppBar(),
       body: TabBarView(
         children: <Widget>[
-          //para pruebas se comenta el FirstTab(),
-          //Text('Hola Mundo'),
-          //FirstTab(),
           FirstTab(),
-          Text('Hola Mundo'),
-          MyBody("Page Three"),
+          FavoritesWidget(),
+          CartWidget(),
           ProfilePage(),
         ],
 // if you want yo disable swiping in tab the use below code
@@ -98,7 +101,7 @@ class _HomePageState extends State<HomePage>
       elevation: 0,
       leading: IconButton(
         icon: Icon(Icons.menu),
-        onPressed: () {},
+        onPressed: () => _scaffoldKey.currentState.openDrawer(),
       ),
       actions: <Widget>[
         IconButton(

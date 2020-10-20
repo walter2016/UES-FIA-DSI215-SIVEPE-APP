@@ -12,52 +12,52 @@ class ListaProductos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: press,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(20),
-              // For  demo we use fixed height  and width
-              // Now we dont need them
-              // height: 180,
-              // width: 160,
-              decoration: BoxDecoration(
-                color: Colors.amber,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Hero(
-                tag: Colors.amber,
-                child: Image.network(product.imagenUrl != null ? product.imagenUrl : 'https://via.placeholder.com/350x350'),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20 / 4),
-            child: Text(
-              // products is out demo list
-              product.nombre,
-              style: TextStyle(color: Color(0xFFACACAC)),
-            ),
-          ),
-          Row(
+      child: Card(
+          elevation: 3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image(
-                image: AssetImage(
-                    'assets/images/sale.jpg'),
-                height: 50,
-                width: 50,
+              Hero(
+                tag: product.id.toString(),
+                child: Container(
+                  width: (size.width - 16) / 2,
+                  height: (size.width - 16) / 2,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(product.imagenUrl != null
+                              ? product.imagenUrl
+                              : 'https://d2f7anuvnar8n5.cloudfront.net/external_assets/tutorials/artwork_logos_v1/soldier.png'),
+                          fit: BoxFit.cover)),
+                ),
               ),
-              Text(
-                product.precio.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )
+              SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Text(
+                  product.nombre,
+                  style: TextStyle(fontSize: 14),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Text(
+                  "\$" + product.precio.toString() + " USD",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
             ],
-          )
-        ],
-      ),
+          )),
     );
   }
 }
