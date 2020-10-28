@@ -1,5 +1,4 @@
 import 'package:com_app_tienda/Categories/model/category_entity.dart';
-import 'package:com_app_tienda/models/Category.dart';
 import 'package:flutter/material.dart';
 
 class ListaCategorias extends StatelessWidget {
@@ -13,45 +12,42 @@ class ListaCategorias extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: press,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(20),
-              // For  demo we use fixed height  and width
-              // Now we dont need them
-              // height: 180,
-              // width: 160,
-              decoration: BoxDecoration(
-                color: Colors.amber,
-                borderRadius: BorderRadius.circular(16),
+      child: Card(
+          elevation: 3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Hero(
+                tag: category.id.toString(),
+                child: Container(
+                  width: (size.width - 16) / 3,
+                  height: (size.width - 16) / 3,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              'https://d2f7anuvnar8n5.cloudfront.net/external_assets/tutorials/artwork_logos_v1/soldier.png'),
+                          fit: BoxFit.cover)),
+                ),
               ),
-              child: Hero(
-                tag: category.id,
-                child: Text('IMAGEN'),
+              SizedBox(
+                height: 5,
               ),
-            ),
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
-            child: Text(
-              // products is out demo list
-              category.nombre,
-              style: TextStyle(color: Color(0xFFACACAC)),
-            ),
-          ),
-          /*
-          Text(
-            "${category.description}",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )
-          */
-        ],
-      ),
+              Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Text(
+                  category.nombre,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          )),
     );
   }
 }

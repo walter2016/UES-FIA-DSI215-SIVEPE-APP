@@ -29,6 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
     authenticationBloc.add(AppStarted());
   }
 
+  final _formKey = GlobalKey<FormState>();
+
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +44,13 @@ class _LoginScreenState extends State<LoginScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter your email';
+              }
+              return null;
+            },
             controller: emailController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
@@ -78,7 +86,13 @@ class _LoginScreenState extends State<LoginScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter your Password';
+              }
+              return null;
+            },
             controller: passwordController,
             obscureText: true,
             style: TextStyle(
@@ -149,12 +163,12 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          final String email = emailController.text;
-          final String password = passwordController.text;
-          authenticationBloc
-              .add(LoginRequest(email: email, password: password));
-          /*Navigator.push(context,
-              PageTransition(type: PageTransitionType.fade, child: HomePage()));*/
+          if (_formKey.currentState.validate()) {
+            final String email = emailController.text;
+            final String password = passwordController.text;
+            authenticationBloc
+                .add(LoginRequest(email: email, password: password));
+          }
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -273,83 +287,87 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildLoginPage(BuildContext context) {
-    return Scaffold(
-      body: Builder(
-        builder: (BuildContext context) {
-          return BlocListener<AuthenticationBloc, AuthenticationState>(
-            listener: (BuildContext context, AuthenticationState state) {
-              if (state is Unauthenticated) {
-                Scaffold.of(context).showSnackBar(SnackBar(content: Text(state.reason)));
-                return;
-              }
-              if (state is Authenticated) {
-                Navigator.pushReplacementNamed(context, "/home");
-              }
-            },
-            child: AnnotatedRegion<SystemUiOverlayStyle>(
-            value: SystemUiOverlayStyle.light,
-            child: GestureDetector(
-              onTap: () => FocusScope.of(context).unfocus(),
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    height: double.infinity,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xFFff9100),
-                          Color(0xFFFF9800),
-                          Color(0xFFffab40),
-                        ],
-                        stops: [0.1, 0.4, 0.9],
+    return Form(
+      key: _formKey,
+      child: Scaffold(
+        body: Builder(
+          builder: (BuildContext context) {
+            return BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (BuildContext context, AuthenticationState state) {
+                if (state is Unauthenticated) {
+                  Scaffold.of(context)
+                      .showSnackBar(SnackBar(content: Text(state.reason)));
+                  return;
+                }
+                if (state is Authenticated) {
+                  Navigator.pushReplacementNamed(context, "/home");
+                }
+              },
+              child: AnnotatedRegion<SystemUiOverlayStyle>(
+                value: SystemUiOverlayStyle.light,
+                child: GestureDetector(
+                  onTap: () => FocusScope.of(context).unfocus(),
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                        height: double.infinity,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color(0xFFff9100),
+                              Color(0xFFFF9800),
+                              Color(0xFFffab40),
+                            ],
+                            stops: [0.1, 0.4, 0.9],
+                          ),
+                        ),
                       ),
-                    ),
+                      Container(
+                        height: double.infinity,
+                        child: SingleChildScrollView(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 40.0,
+                            vertical: 90.0,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                'Iniciar Sesión',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'OpenSans',
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 20.0),
+                              _buildEmailTF(),
+                              SizedBox(
+                                height: 30.0,
+                              ),
+                              _buildPasswordTF(),
+                              _buildForgotPasswordBtn(),
+                              _buildRememberMeCheckbox(),
+                              _buildLoginBtn(),
+                              _buildSignInWithText(),
+                              _buildSocialBtnRow(),
+                              _buildSignupBtn(),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                  Container(
-                    height: double.infinity,
-                    child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 40.0,
-                        vertical: 90.0,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Iniciar Sesión',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'OpenSans',
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 20.0),
-                          _buildEmailTF(),
-                          SizedBox(
-                            height: 30.0,
-                          ),
-                          _buildPasswordTF(),
-                          _buildForgotPasswordBtn(),
-                          _buildRememberMeCheckbox(),
-                          _buildLoginBtn(),
-                          _buildSignInWithText(),
-                          _buildSocialBtnRow(),
-                          _buildSignupBtn(),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
+                ),
               ),
-            ),
-          ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
