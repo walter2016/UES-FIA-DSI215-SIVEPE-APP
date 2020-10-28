@@ -1,5 +1,6 @@
 import 'package:com_app_tienda/Products/model/product_entity.dart';
 import 'package:flutter/material.dart';
+import '../utilities/constants.dart';
 
 class ListaProductos extends StatelessWidget {
   final ProductEntity product;
@@ -12,6 +13,8 @@ class ListaProductos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var imageUrl = product.imagenUrl != null && product.imagenUrl != "" ? "http://192.168.43.78${product.imagenUrl}" : 'https://via.placeholder.com/350x350';
+    print(imageUrl);
     return GestureDetector(
       onTap: press,
       child: Column(
@@ -30,7 +33,7 @@ class ListaProductos extends StatelessWidget {
               ),
               child: Hero(
                 tag: Colors.amber,
-                child: Image.network(product.imagenUrl != null ? product.imagenUrl : 'https://via.placeholder.com/350x350'),
+                child: Image.network(imageUrl),
               ),
             ),
           ),
