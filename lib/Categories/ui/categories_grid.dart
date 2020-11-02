@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:com_app_tienda/Categories/model/category_entity.dart';
-import 'package:com_app_tienda/body/category_card_details_page.dart';
+import 'package:com_app_tienda/ProductByCategory/category_card_details_page.dart';
 import 'package:com_app_tienda/body/category_card_page.dart';
 import 'package:flutter/material.dart';
 

@@ -27,6 +27,6 @@ final kBoxDecorationStyle = BoxDecoration(
 // In release mode this constant will be tree-shaked
 final kBaseUrl = kReleaseMode
         ? "http://ec2-34-239-124-79.compute-1.amazonaws.com/api/"
-        : "http://192.168.0.15:8080/api/"
+        : "http://192.168.0.13:8080/api/"
     // "http://ec2-34-239-124-79.compute-1.amazonaws.com/api/"
     ;
