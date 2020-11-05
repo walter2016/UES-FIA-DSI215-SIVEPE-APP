@@ -12,6 +12,14 @@ class ProductDetail extends StatelessWidget {
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        title: Text(
+          product.nombre,
+          style: TextStyle(
+            color: Color(0xFFFFFFFF),
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
         brightness: Brightness.light,
         backgroundColor: Color(0xFFff9100),
         elevation: 0,
@@ -20,8 +28,8 @@ class ProductDetail extends StatelessWidget {
             Navigator.pop(context);
           },
           child: Icon(
-            Icons.arrow_back,
-            color: Colors.grey[800],
+            Icons.keyboard_backspace,
+            color: Color(0xFFFFFFFF),
           ),
         ),
         actions: [
@@ -29,7 +37,7 @@ class ProductDetail extends StatelessWidget {
             padding: EdgeInsets.only(right: 16),
             child: Icon(
               Icons.more_horiz,
-              color: Colors.grey[800],
+              color: Color(0xFFFFFFFF),
             ),
           ),
         ],
@@ -138,7 +146,7 @@ class ProductDetail extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Posted by",
+                                "Subido por",
                                 style: TextStyle(
                                   color: Colors.grey[600],
                                   fontSize: 12,
@@ -177,7 +185,7 @@ class ProductDetail extends StatelessWidget {
                           color: Colors.blue[300],
                         ),
                         child: Text(
-                          "Add to Cart",
+                          "Añadir al Carrito",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

@@ -1,4 +1,5 @@
 import 'package:com_app_tienda/Categories/ui/categories_tab.dart';
+import 'package:com_app_tienda/Ordenes/orders.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_bloc.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_event.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_state.dart';
@@ -99,11 +100,28 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     Navigator.of(context).pushNamed('/Tabs', arguments: 4);
                   },
                   leading: Icon(
-                    Icons.hearing,
+                    Icons.favorite,
                     color: Theme.of(context).focusColor.withOpacity(1),
                   ),
                   title: Text(
-                    "Wish List",
+                    "Lista de Deseos",
+                    style: Theme.of(context).textTheme.subhead,
+                  ),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.fade,
+                            child: OrdersWidget()));
+                  },
+                  leading: Icon(
+                    Icons.assignment,
+                    color: Theme.of(context).focusColor.withOpacity(1),
+                  ),
+                  title: Text(
+                    "Mis Ordenes",
                     style: Theme.of(context).textTheme.subhead,
                   ),
                 ),
@@ -137,7 +155,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ListTile(
                   dense: true,
                   title: Text(
-                    "Application Preferences",
+                    "Preferencias de la Aplicación",
                     style: Theme.of(context).textTheme.body1,
                   ),
                   trailing: Icon(
@@ -163,7 +181,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     authenticationBloc.add(LoggedOut());
                   },
                   leading: Icon(
-                    Icons.location_searching,
+                    Icons.exit_to_app,
                     color: Theme.of(context).focusColor.withOpacity(1),
                   ),
                   title: Text(

@@ -54,11 +54,18 @@ class _ProfileSettingsDialogState extends State<ProfileSettingsDialog> {
                         EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                     title: Row(
                       children: <Widget>[
-                        Icon(Icons.perm_identity),
+                        Icon(
+                          Icons.perm_identity,
+                          color: Colors.grey[800],
+                        ),
                         SizedBox(width: 10),
                         Text(
-                          'Profile Settings',
-                          style: Theme.of(context).textTheme.body2,
+                          'Configuración de Perfil',
+                          style: TextStyle(
+                            color: Colors.grey[800],
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
                         )
                       ],
                     ),
@@ -72,10 +79,11 @@ class _ProfileSettingsDialogState extends State<ProfileSettingsDialog> {
                                   TextStyle(color: Theme.of(context).hintColor),
                               keyboardType: TextInputType.text,
                               decoration: getInputDecoration(
-                                  hintText: 'John Doe', labelText: 'Full Name'),
+                                  hintText: 'Nombre Completo',
+                                  labelText: 'Nombre Completo'),
                               initialValue: '${user.displayName}',
                               validator: (input) => input.trim().length < 3
-                                  ? 'Not a valid full name'
+                                  ? 'No es un nombre completo válido'
                                   : null,
                               onSaved: (input) => widget.user.name = input,
                             ),
@@ -84,11 +92,11 @@ class _ProfileSettingsDialogState extends State<ProfileSettingsDialog> {
                                   TextStyle(color: Theme.of(context).hintColor),
                               keyboardType: TextInputType.emailAddress,
                               decoration: getInputDecoration(
-                                  hintText: 'johndo@gmail.com',
-                                  labelText: 'Email Address'),
+                                  hintText: 'username@correo.com',
+                                  labelText: 'Dirección de correo electrónico'),
                               initialValue: '${user.email}',
                               validator: (input) => !input.contains('@')
-                                  ? 'Not a valid email'
+                                  ? 'No es un email valido'
                                   : null,
                               onSaved: (input) => widget.user.email = input,
                             ),
@@ -102,14 +110,14 @@ class _ProfileSettingsDialogState extends State<ProfileSettingsDialog> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text('Cancel'),
+                            child: Text('Cancelar'),
                           ),
                           MaterialButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
                             child: Text(
-                              'Save',
+                              'Guardar',
                               style: TextStyle(
                                   color: Theme.of(context).accentColor),
                             ),
@@ -123,7 +131,7 @@ class _ProfileSettingsDialogState extends State<ProfileSettingsDialog> {
                 });
           },
           child: Text(
-            "Edit",
+            "Editar",
           ),
         ),
       );

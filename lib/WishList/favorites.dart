@@ -32,13 +32,17 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
                 contentPadding: EdgeInsets.symmetric(vertical: 0),
                 leading: Icon(
                   Icons.favorite,
-                  color: Theme.of(context).hintColor,
+                  color: Colors.grey[800],
                 ),
                 title: Text(
-                  'Wish List',
+                  'Lista de Deseos',
+                  style: TextStyle(
+                    color: Colors.grey[800],
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                   overflow: TextOverflow.fade,
                   softWrap: false,
-                  style: Theme.of(context).textTheme.display1,
                 ),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,

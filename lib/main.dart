@@ -17,14 +17,17 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  final UserRepository userRepository = UserRepository(firebaseAuth: firebaseAuth);
+  final UserRepository userRepository =
+      UserRepository(firebaseAuth: firebaseAuth);
   return runApp(BlocProvider(
     create: (BuildContext context) =>
         AuthenticationBloc(userRepository: userRepository),
     child: BlocProvider(
-      create: (BuildContext context) => CategoriesBloc(categoryRepository: CategoryRepository()),
+      create: (BuildContext context) =>
+          CategoriesBloc(categoryRepository: CategoryRepository()),
       child: BlocProvider(
-        create: (BuildContext context) => ProductsBloc(productsRepository: ProductsRepository()),
+        create: (BuildContext context) =>
+            ProductsBloc(productsRepository: ProductsRepository()),
         child: App(),
       ),
     ),
@@ -128,142 +131,147 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     return Scaffold(
       backgroundColor: Color(0xFFFF9800),
-      body: Container(
-        width: double.infinity,
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              top: -50,
-              left: 0,
-              child: FadeAnimation(
-                  1,
-                  Container(
-                    width: width,
-                    height: 400,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/one.png'),
-                            fit: BoxFit.cover)),
-                  )),
-            ),
-            Positioned(
-              top: -100,
-              left: 0,
-              child: FadeAnimation(
-                  1.3,
-                  Container(
-                    width: width,
-                    height: 400,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/one.png'),
-                            fit: BoxFit.cover)),
-                  )),
-            ),
-            Positioned(
-              top: -150,
-              left: 0,
-              child: FadeAnimation(
-                  1.6,
-                  Container(
-                    width: width,
-                    height: 400,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/one.png'),
-                            fit: BoxFit.cover)),
-                  )),
-            ),
-            Container(
-              padding: EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  FadeAnimation(
-                      1,
-                      Text(
-                        "Bienvenido",
-                        style: TextStyle(color: Colors.white, fontSize: 50),
-                      )),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  FadeAnimation(
-                      1.3,
-                      Text(
-                        "La tienda en linea ideal para los emprendedores.",
-                        style: TextStyle(
-                            color: Colors.white.withOpacity(.7),
-                            height: 1.4,
-                            fontSize: 20),
-                      )),
-                  SizedBox(
-                    height: 180,
-                  ),
-                  FadeAnimation(
-                      1.6,
-                      AnimatedBuilder(
-                        animation: _scaleController,
-                        builder: (context, child) => Transform.scale(
-                            scale: _scaleAnimation.value,
-                            child: Center(
-                              child: AnimatedBuilder(
-                                animation: _widthController,
-                                builder: (context, child) => Container(
-                                  width: _widthAnimation.value,
-                                  height: 80,
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: Colors.white.withOpacity(.5)),
-                                  child: InkWell(
-                                    onTap: () {
-                                      _scaleController.forward();
-                                    },
-                                    child: Stack(children: <Widget>[
-                                      AnimatedBuilder(
-                                        animation: _positionController,
-                                        builder: (context, child) => Positioned(
-                                          left: _positionAnimation.value,
-                                          child: AnimatedBuilder(
-                                            animation: _scale2Controller,
-                                            builder: (context, child) =>
-                                                Transform.scale(
-                                                    scale:
-                                                        _scale2Animation.value,
-                                                    child: Container(
-                                                      width: 60,
-                                                      height: 60,
-                                                      decoration: BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color: Colors.orange),
-                                                      child: hideIcon == false
-                                                          ? Icon(
-                                                              Icons
-                                                                  .arrow_forward,
-                                                              color:
-                                                                  Colors.white,
-                                                            )
-                                                          : Container(),
-                                                    )),
+      body: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                top: -50,
+                left: 0,
+                child: FadeAnimation(
+                    1,
+                    Container(
+                      width: width,
+                      height: 400,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/one.png'),
+                              fit: BoxFit.cover)),
+                    )),
+              ),
+              Positioned(
+                top: -100,
+                left: 0,
+                child: FadeAnimation(
+                    1.3,
+                    Container(
+                      width: width,
+                      height: 400,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/one.png'),
+                              fit: BoxFit.cover)),
+                    )),
+              ),
+              Positioned(
+                top: -150,
+                left: 0,
+                child: FadeAnimation(
+                    1.6,
+                    Container(
+                      width: width,
+                      height: 400,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/one.png'),
+                              fit: BoxFit.cover)),
+                    )),
+              ),
+              Container(
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    FadeAnimation(
+                        1,
+                        Text(
+                          "Bienvenido",
+                          style: TextStyle(color: Colors.white, fontSize: 50),
+                        )),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    FadeAnimation(
+                        1.3,
+                        Text(
+                          "La tienda en linea ideal para los emprendedores.",
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(.7),
+                              height: 1.4,
+                              fontSize: 20),
+                        )),
+                    SizedBox(
+                      height: 180,
+                    ),
+                    FadeAnimation(
+                        1.6,
+                        AnimatedBuilder(
+                          animation: _scaleController,
+                          builder: (context, child) => Transform.scale(
+                              scale: _scaleAnimation.value,
+                              child: Center(
+                                child: AnimatedBuilder(
+                                  animation: _widthController,
+                                  builder: (context, child) => Container(
+                                    width: _widthAnimation.value,
+                                    height: 80,
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: Colors.white.withOpacity(.5)),
+                                    child: InkWell(
+                                      onTap: () {
+                                        _scaleController.forward();
+                                      },
+                                      child: Stack(children: <Widget>[
+                                        AnimatedBuilder(
+                                          animation: _positionController,
+                                          builder: (context, child) =>
+                                              Positioned(
+                                            left: _positionAnimation.value,
+                                            child: AnimatedBuilder(
+                                              animation: _scale2Controller,
+                                              builder: (context, child) =>
+                                                  Transform.scale(
+                                                      scale: _scale2Animation
+                                                          .value,
+                                                      child: Container(
+                                                        width: 60,
+                                                        height: 60,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                color: Colors
+                                                                    .orange),
+                                                        child: hideIcon == false
+                                                            ? Icon(
+                                                                Icons
+                                                                    .arrow_forward,
+                                                                color: Colors
+                                                                    .white,
+                                                              )
+                                                            : Container(),
+                                                      )),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ]),
+                                      ]),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )),
-                      )),
-                  SizedBox(
-                    height: 60,
-                  ),
-                ],
-              ),
-            )
-          ],
+                              )),
+                        )),
+                    SizedBox(
+                      height: 60,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

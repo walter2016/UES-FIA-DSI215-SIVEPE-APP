@@ -40,13 +40,13 @@ class FirstTabState extends State<FirstTab>
               labelColor: Colors.white,
               tabs: [
                 Tab(
-                  text: "CATEGORIES",
+                  text: "CATEGORIAS",
                 ),
                 Tab(
                   text: "TOP",
                 ),
                 Tab(
-                  text: "OFFER",
+                  text: "OFERTAS",
                 ),
               ],
             ),
@@ -63,5 +63,3 @@ class FirstTabState extends State<FirstTab>
     );
   }
 }
-
-

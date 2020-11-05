@@ -26,7 +26,7 @@ class _CartWidgetState extends State<CartWidget> {
         children: <Widget>[
           Container(
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -38,19 +38,26 @@ class _CartWidgetState extends State<CartWidget> {
                       contentPadding: EdgeInsets.symmetric(vertical: 0),
                       leading: Icon(
                         Icons.shopping_cart,
-                        color: Theme.of(context).hintColor,
+                        color: Colors.grey[800],
                       ),
                       title: Text(
-                        'Shopping Cart',
+                        'Carrito de Compras',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.display1,
+                        style: TextStyle(
+                          color: Colors.grey[800],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                       ),
                       subtitle: Text(
-                        'Verify your quantity and click checkout',
+                        'Verifique su cantidad y haga clic en pagar',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.caption,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                   ),
@@ -61,7 +68,7 @@ class _CartWidgetState extends State<CartWidget> {
                     primary: false,
                     itemCount: _productsList.cartList.length,
                     separatorBuilder: (context, index) {
-                      return SizedBox(height: 15);
+                      return SizedBox(height: 1);
                     },
                     itemBuilder: (context, index) {
                       return CartItemWidget(
@@ -74,7 +81,7 @@ class _CartWidgetState extends State<CartWidget> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 1.0, left: 8.0, right: 8.0),
+            padding: EdgeInsets.only(top: 1.0, left: 4.0, right: 4.0),
             height: 120,
             child: Card(
               elevation: 3.0,
@@ -95,7 +102,7 @@ class _CartWidgetState extends State<CartWidget> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text("Shipping cost"),
+                        Text("Costo de Envío"),
                         Text(
                           "\$20.00",
                           style: TextStyle(fontSize: 13),
@@ -139,7 +146,7 @@ class _CartWidgetState extends State<CartWidget> {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        "Checkout",
+                        "Realizar Pago",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),

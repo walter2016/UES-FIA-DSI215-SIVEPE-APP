@@ -1,5 +1,8 @@
 import 'package:com_app_tienda/config/app_config.dart' as config;
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+
+import '../main.dart';
 
 class EmptyFavoritesWidget extends StatelessWidget {
   const EmptyFavoritesWidget({
@@ -75,13 +78,16 @@ class EmptyFavoritesWidget extends StatelessWidget {
           ),
           FlatButton(
             onPressed: () {
-              Navigator.of(context).pushNamed('/Tabs', arguments: 2);
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.fade, child: HomePage()));
             },
             padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
             color: Theme.of(context).focusColor.withOpacity(0.15),
             shape: StadiumBorder(),
             child: Text(
-              'Start Exploring',
+              'Comienza a Explorar',
 //                        textAlign: TextAlign.ce,
               style: Theme.of(context).textTheme.title,
             ),

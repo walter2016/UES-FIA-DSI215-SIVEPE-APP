@@ -35,8 +35,20 @@ class DetalleCategoria extends StatelessWidget {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
+      leading: new IconButton(
+          icon: new Icon(Icons.keyboard_backspace, color: Color(0xFFFFFFFF)),
+          onPressed: () {
+            Navigator.pop(context);
+          }),
       backgroundColor: Color(0xFFFF9800),
-      title: Text(category.nombre),
+      title: Text(
+        category.nombre,
+        style: TextStyle(
+          color: Color(0xFFFFFFFF),
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
     );
   }
 
