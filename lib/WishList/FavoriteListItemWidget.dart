@@ -91,7 +91,6 @@ class _FavoriteListItemWidgetState extends State<FavoriteListItemWidget> {
                                   overflow: TextOverflow.fade,
                                   softWrap: false,
                                 ),
-
                                 Icon(
                                   Icons.star,
                                   color: Colors.amber,

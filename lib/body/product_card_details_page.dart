@@ -1,4 +1,5 @@
 import 'package:com_app_tienda/Products/model/product_entity.dart';
+import 'package:com_app_tienda/Rating/rating_page.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetail extends StatelessWidget {
@@ -140,32 +141,33 @@ class ProductDetail extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Subido por",
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(builder: (_) => RatingPage())),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                              size: 30,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              '3.5',
+                              style: TextStyle(
+                                color: Colors.grey[800],
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
                               ),
-                              SizedBox(
-                                height: 4,
-                              ),
-                              Text(
-                                "Nannie Barker",
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                            ),
+                            SizedBox(
+                              height: 4,
+                            ),
+                          ],
+                        ),
                       ),
                       Container(
                         padding:
