@@ -153,6 +153,11 @@ class _AfiliacionState extends State<Afiliacion> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        leading: new IconButton(
+            icon: new Icon(Icons.keyboard_backspace, color: Color(0xFFFFFFFF)),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         backgroundColor: Color(0xFFFF9800),
         title: const Text('Afiliación'),
       ),

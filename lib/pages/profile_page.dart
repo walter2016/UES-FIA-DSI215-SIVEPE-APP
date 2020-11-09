@@ -31,9 +31,9 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (BuildContext context, AuthenticationState state) {
-          if (state is Authenticated) {
-            user = state.user;
-          }
+      if (state is Authenticated) {
+        user = state.user;
+      }
       return BlocListener<AuthenticationBloc, AuthenticationState>(
         listener: (BuildContext context, AuthenticationState state) {
           if (state is Unauthenticated) {
@@ -57,9 +57,19 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: <Widget>[
                     ListTile(
                       onTap: () {},
-                      leading: Icon(Icons.perm_identity),
+                      leading: Icon(
+                        Icons.perm_identity,
+                        color: Colors.grey[800],
+                      ),
                       title: Text(
-                        'Profile Settings',
+                        'Configuración de Perfil',
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
+                        style: TextStyle(
+                          color: Colors.grey[800],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
                       ),
                       trailing: ButtonTheme(
                         padding: EdgeInsets.all(0),
@@ -76,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ListTile(
                       dense: true,
                       title: Text(
-                        'Full name',
+                        'Nombre Completo',
                       ),
                       trailing: Text(
                         '${user.displayName}',
@@ -85,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ListTile(
                       dense: true,
                       title: Text(
-                        'Email',
+                        'Correo',
                       ),
                       trailing: Text(
                         '${user.email}',
@@ -109,13 +119,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       onTap: () {},
                       leading: Icon(Icons.check),
                       title: Text(
-                        'Affiliate',
+                        'Afiliación',
                       ),
                     ),
                     ListTile(
                       dense: true,
                       title: Text(
-                        'Full name:',
+                        'Nombre Completo:',
                       ),
                       trailing: Text(
                         _user.name,
@@ -127,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         'Estado:',
                       ),
                       trailing: Text(
-                        'No Affiliate',
+                        'No Afiliado',
                       ),
                     ),
                     ListTile(
@@ -181,7 +191,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   width: double.infinity,
                   child: RaisedButton(
                     elevation: 4.0,
-                    onPressed: (){
+                    onPressed: () {
                       authenticationBloc.add(LoggedOut());
                     },
                     padding: EdgeInsets.all(10.0),

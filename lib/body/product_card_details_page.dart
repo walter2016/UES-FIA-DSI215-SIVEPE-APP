@@ -1,4 +1,5 @@
 import 'package:com_app_tienda/Products/model/product_entity.dart';
+import 'package:com_app_tienda/Rating/rating_page.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetail extends StatelessWidget {
@@ -12,6 +13,14 @@ class ProductDetail extends StatelessWidget {
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        title: Text(
+          product.nombre,
+          style: TextStyle(
+            color: Color(0xFFFFFFFF),
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
         brightness: Brightness.light,
         backgroundColor: Color(0xFFff9100),
         elevation: 0,
@@ -20,8 +29,8 @@ class ProductDetail extends StatelessWidget {
             Navigator.pop(context);
           },
           child: Icon(
-            Icons.arrow_back,
-            color: Colors.grey[800],
+            Icons.keyboard_backspace,
+            color: Color(0xFFFFFFFF),
           ),
         ),
         actions: [
@@ -29,7 +38,7 @@ class ProductDetail extends StatelessWidget {
             padding: EdgeInsets.only(right: 16),
             child: Icon(
               Icons.more_horiz,
-              color: Colors.grey[800],
+              color: Color(0xFFFFFFFF),
             ),
           ),
         ],
@@ -132,32 +141,33 @@ class ProductDetail extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Posted by",
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(builder: (_) => RatingPage())),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                              size: 30,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              '3.5',
+                              style: TextStyle(
+                                color: Colors.grey[800],
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
                               ),
-                              SizedBox(
-                                height: 4,
-                              ),
-                              Text(
-                                "Nannie Barker",
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                            ),
+                            SizedBox(
+                              height: 4,
+                            ),
+                          ],
+                        ),
                       ),
                       Container(
                         padding:
@@ -177,7 +187,7 @@ class ProductDetail extends StatelessWidget {
                           color: Colors.blue[300],
                         ),
                         child: Text(
-                          "Add to Cart",
+                          "Añadir al Carrito",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

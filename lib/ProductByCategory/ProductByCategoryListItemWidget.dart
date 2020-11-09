@@ -2,20 +2,20 @@ import 'package:com_app_tienda/Cart/product.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class FavoriteListItemWidget extends StatefulWidget {
+class CategoryListItemWidget extends StatefulWidget {
   String heroTag;
   Product product;
   VoidCallback onDismissed;
 
-  FavoriteListItemWidget(
+  CategoryListItemWidget(
       {Key key, this.heroTag, this.product, this.onDismissed})
       : super(key: key);
 
   @override
-  _FavoriteListItemWidgetState createState() => _FavoriteListItemWidgetState();
+  _CategoryListItemWidgetState createState() => _CategoryListItemWidgetState();
 }
 
-class _FavoriteListItemWidgetState extends State<FavoriteListItemWidget> {
+class _CategoryListItemWidgetState extends State<CategoryListItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
@@ -81,27 +81,6 @@ class _FavoriteListItemWidgetState extends State<FavoriteListItemWidget> {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                // The title of the product
-                                Text(
-                                  '${widget.product.sales} Sales',
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                  overflow: TextOverflow.fade,
-                                  softWrap: false,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                  size: 18,
-                                ),
-                                Text(
-                                  widget.product.rate.toString(),
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                )
-                              ],
-                              crossAxisAlignment: CrossAxisAlignment.center,
                             ),
                           ],
                         ),

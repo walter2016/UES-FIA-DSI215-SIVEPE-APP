@@ -2,27 +2,24 @@ import 'package:com_app_tienda/Cart/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import 'EmptyFavoritesWidget.dart';
-import 'FavoriteListItemWidget.dart';
-import 'ProductGridItemWidget.dart';
+import 'EmptyProductByCategoryWidget.dart';
+import 'ProductByCategoryListItemWidget.dart';
+import 'ProductByCategoryGridItemWidget.dart';
+import 'SearchBarWidget.dart';
 
-class FavoritesWidget extends StatefulWidget {
+class CategoriesWidget extends StatefulWidget {
   @override
-  _FavoritesWidgetState createState() => _FavoritesWidgetState();
+  _CategoriesWidgetState createState() => _CategoriesWidgetState();
 }
 
-class _FavoritesWidgetState extends State<FavoritesWidget> {
+class _CategoriesWidgetState extends State<CategoriesWidget> {
   String layout = 'grid';
   ProductsList _productsList = new ProductsList();
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
+      child: Wrap(
         children: <Widget>[
           Offstage(
             offstage: _productsList.favoritesList.isEmpty,
@@ -30,19 +27,10 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
               padding: const EdgeInsets.only(left: 20, right: 10),
               child: ListTile(
                 contentPadding: EdgeInsets.symmetric(vertical: 0),
-                leading: Icon(
-                  Icons.favorite,
-                  color: Colors.grey[800],
-                ),
-                title: Text(
-                  'Lista de Deseos',
-                  style: TextStyle(
-                    color: Colors.grey[800],
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                  overflow: TextOverflow.fade,
-                  softWrap: false,
+                title: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  child: SearchBarWidget(),
                 ),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -90,7 +78,7 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
                 return SizedBox(height: 5);
               },
               itemBuilder: (context, index) {
-                return FavoriteListItemWidget(
+                return CategoryListItemWidget(
                   heroTag: 'favorites_list',
                   product: _productsList.favoritesList.elementAt(index),
                   onDismissed: () {
@@ -115,7 +103,7 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
                 itemBuilder: (BuildContext context, int index) {
                   Product product =
                       _productsList.favoritesList.elementAt(index);
-                  return ProductGridItemWidget(
+                  return ProductByCategoryGridItemWidget(
                     product: product,
                     heroTag: 'favorites_grid',
                   );
@@ -129,7 +117,7 @@ class _FavoritesWidgetState extends State<FavoritesWidget> {
           ),
           Offstage(
             offstage: _productsList.favoritesList.isNotEmpty,
-            child: EmptyFavoritesWidget(),
+            child: EmptyProductByCategoryFavoritesWidget(),
           )
         ],
       ),

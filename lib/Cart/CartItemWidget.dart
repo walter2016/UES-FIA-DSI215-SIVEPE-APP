@@ -17,9 +17,6 @@ class _CartItemWidgetState extends State<CartItemWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      splashColor: Theme.of(context).accentColor,
-      focusColor: Theme.of(context).accentColor,
-      highlightColor: Theme.of(context).primaryColor,
       onTap: () {},
       child: Container(
         child: Card(
