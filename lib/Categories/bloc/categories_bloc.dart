@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:com_app_tienda/Categories/bloc/categories_event.dart';
 import 'package:com_app_tienda/Categories/bloc/categories_state.dart';
 import 'package:com_app_tienda/Categories/resources/category_repository.dart';
+import 'package:dio/dio.dart';
 
 class CategoriesBloc extends Bloc<CategoryEvent, CategoriesState> {
   final CategoryRepository categoryRepository;
@@ -20,8 +21,8 @@ class CategoriesBloc extends Bloc<CategoryEvent, CategoriesState> {
     try {
       final categories = await categoryRepository.getCategories();
       add(LoadCategoriesSuccess(categories));
-    } on Exception catch(e) {
-      print(e.toString());
+    } on DioError catch(e) {
+      print(e);
       yield CategoriesLoadFailure();
     }
   }

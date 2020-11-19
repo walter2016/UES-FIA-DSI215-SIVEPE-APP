@@ -1,7 +1,10 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
+
 
 class Afiliacion extends StatefulWidget {
   @override
@@ -32,6 +35,7 @@ class _AfiliacionState extends State<Afiliacion> {
   bool _loadingPath4 = false;
   bool _loadingPath5 = false;
   TextEditingController _controller = TextEditingController();
+  bool sendingRequest = false;
 
   @override
   void initState() {
@@ -165,6 +169,10 @@ class _AfiliacionState extends State<Afiliacion> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            sendingRequest ? Container(
+              height: 8,
+              child: LinearProgressIndicator(),
+            ) : Container(height: 0, width: 0,),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               decoration: BoxDecoration(
@@ -508,7 +516,7 @@ class _AfiliacionState extends State<Afiliacion> {
                     width: double.infinity,
                     child: RaisedButton(
                       elevation: 4.0,
-                      onPressed: () => {},
+                      onPressed: sendEnrollmentRequest,
                       padding: EdgeInsets.all(10.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -532,6 +540,76 @@ class _AfiliacionState extends State<Afiliacion> {
           ],
         ),
       ),
+    );
+  }
+
+  void sendEnrollmentRequest() async {
+    // Reading bank reference
+    if (_paths == null) {
+      showAlert('Ingrese la referencia bancaria');
+      return;
+    }
+    File bankReferenceFile = new File(_paths[0]?.path);
+    List<int> imageBytes = await bankReferenceFile.readAsBytes();
+    String bankReferenceEncoded = base64Encode(imageBytes);
+
+
+    // Reading water bill
+    if (_paths2 == null) {
+      showAlert('Ingrese el recibo de agua');
+      return;
+    }
+    File waterBillFile = new File(_paths2[0]?.path);
+    List<int> waterBillBytes = await waterBillFile.readAsBytes();
+    String waterBillEncoded = base64Encode(waterBillBytes);
+
+    // Reading energy bill
+    if (_paths3 == null) {
+      showAlert('Ingrese el recibo de energia');
+      return;
+    }
+    File energyBillFile = new File(_paths3[0]?.path);
+    List<int> energyBillBytes = await energyBillFile.readAsBytes();
+    String energyBillEncoded = base64Encode(energyBillBytes);
+
+    // Reading phone
+    if (_paths4 == null) {
+      showAlert('Ingrese el recibo de agua');
+      return;
+    }
+    File phoneBillFile = new File(_paths4[0]?.path);
+    List<int> phoneBillBytes = await phoneBillFile.readAsBytes();
+    String phoneBillEncoded = base64Encode(phoneBillBytes);
+
+    // Reading pagare
+    if (_paths5 == null) {
+      showAlert('Ingrese el recibo de agua');
+      return;
+    }
+    File pagareFile = new File(_paths5[0]?.path);
+    List<int> pagareBytes = await pagareFile.readAsBytes();
+    String pagareBillEncoded = base64Encode(pagareBytes);
+
+  }
+
+  showAlert(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text('$message'),
+          actions: [
+            RaisedButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              color: Colors.red,
+            ),
+          ],
+        );
+      }
     );
   }
 }

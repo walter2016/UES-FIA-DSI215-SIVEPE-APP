@@ -4,7 +4,7 @@ import 'package:com_app_tienda/Users/blocs/authentication_state.dart';
 import 'package:com_app_tienda/Users/models/user_entity.dart';
 import 'package:com_app_tienda/models/user.dart';
 import 'package:com_app_tienda/pages/ProfileSettingsDialog.dart';
-import 'package:com_app_tienda/pages/afiliacion_page.dart';
+import 'package:com_app_tienda/Enrollment/ui/afiliacion_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

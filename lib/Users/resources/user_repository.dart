@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,6 +45,10 @@ class UserRepository {
 
   Future<UserEntity> getUser() async {
     final User user = _firebaseAuth.currentUser;
+    final token = await user.getIdToken();
+    final shared = await SharedPreferences.getInstance();
+    await shared.setString('token', token);
+    print(token);
     return await fromFirebaseUserToUserEntity(user);
   }
 
