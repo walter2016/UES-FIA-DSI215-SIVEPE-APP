@@ -1,5 +1,6 @@
 import 'package:com_app_tienda/Cart/CartItemWidget.dart';
 import 'package:com_app_tienda/Cart/product.dart';
+import 'package:com_app_tienda/Pago/RealizarPago.dart';
 import 'package:flutter/material.dart';
 
 class CartWidget extends StatefulWidget {
@@ -135,7 +136,15 @@ class _CartWidgetState extends State<CartWidget> {
                 borderRadius: BorderRadius.circular(4.0),
               ),
               color: Color(0xFFff9100),
-              onPressed: () => {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return RealizarPago();
+                    },
+                  ),
+                );
+              },
               child: Container(
                 padding: EdgeInsets.symmetric(
                   vertical: 15.0,
