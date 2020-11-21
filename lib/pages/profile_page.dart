@@ -1,3 +1,5 @@
+import 'package:com_app_tienda/Enrollment/model/enrollment_entity.dart';
+import 'package:com_app_tienda/Enrollment/resources/EnrollmentRepository.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_bloc.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_event.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_state.dart';
@@ -21,6 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
   User _user = new User.init().getCurrentUser();
   UserEntity user = UserEntity();
   AuthenticationBloc authenticationBloc;
+  EnrollmentRepository enrollmentRepository = new EnrollmentRepository();
   @override
   void initState() {
     super.initState();
@@ -104,81 +107,104 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                decoration: BoxDecoration(
-                  color: Color(0xFFFFFFFF),
-                  borderRadius: BorderRadius.circular(6),
-                  boxShadow: [BoxShadow(offset: Offset(0, 3), blurRadius: 10)],
-                ),
-                child: ListView(
-                  shrinkWrap: true,
-                  primary: false,
-                  children: <Widget>[
-                    ListTile(
-                      onTap: () {},
-                      leading: Icon(Icons.check),
-                      title: Text(
-                        'Afiliación',
-                      ),
-                    ),
-                    ListTile(
-                      dense: true,
-                      title: Text(
-                        'Nombre Completo:',
-                      ),
-                      trailing: Text(
-                        _user.name,
-                      ),
-                    ),
-                    ListTile(
-                      dense: true,
-                      title: Text(
-                        'Estado:',
-                      ),
-                      trailing: Text(
-                        'No Afiliado',
-                      ),
-                    ),
-                    ListTile(
-                      dense: true,
-                      title: Text(
-                        'Fecha de envio:',
-                      ),
-                      trailing: Text(
-                        '----',
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 15.0),
+              FutureBuilder<EnrollmentEntity>(
+                future: enrollmentRepository.getEnrollmentRequest(),
+                builder: (BuildContext context, AsyncSnapshot<EnrollmentEntity> snapshot) {
+                  if (!snapshot.hasData && snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                      height: 40,
                       width: double.infinity,
-                      child: RaisedButton(
-                        elevation: 4.0,
-                        onPressed: () => Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: Afiliacion())),
-                        padding: EdgeInsets.all(10.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        color: Colors.yellow,
-                        child: Text(
-                          'Ingresar Solicitud',
-                          style: TextStyle(
-                            color: Color(0xFF527DAA),
-                            letterSpacing: 1.5,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'OpenSans',
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                  if (snapshot.data == null) {
+                    return Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFFFFF),
+                        borderRadius: BorderRadius.circular(6),
+                        boxShadow: [BoxShadow(offset: Offset(0, 3), blurRadius: 10)],
+                      ),
+                      child: Column(
+                        children: [
+                          Text('No tiene solicitudes pendientes'),
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 15.0),
+                            width: double.infinity,
+                            child: RaisedButton(
+                              elevation: 4.0,
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.fade,
+                                      child: Afiliacion())),
+                              padding: EdgeInsets.all(10.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              color: Colors.yellow,
+                              child: Text(
+                                'Ingresar Solicitud',
+                                style: TextStyle(
+                                  color: Color(0xFF527DAA),
+                                  letterSpacing: 1.5,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'OpenSans',
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                  print(snapshot.data);
+                  return Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFFFFFFF),
+                      borderRadius: BorderRadius.circular(6),
+                      boxShadow: [BoxShadow(offset: Offset(0, 3), blurRadius: 10)],
+                    ),
+                    child: ListView(
+                      shrinkWrap: true,
+                      primary: false,
+                      children: <Widget>[
+                        ListTile(
+                          onTap: () {},
+                          leading: Icon(Icons.check),
+                          title: Text(
+                            'Afiliación',
                           ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
+
+                        ListTile(
+                          dense: true,
+                          title: Text(
+                            'Estado:',
+                          ),
+                          trailing: Text(
+                            snapshot.data.status == true ? 'Aprobado' : 'No aprobado',
+                          ),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Text(
+                            'Fecha de envio:',
+                          ),
+                          trailing: Text(
+                            '${DateTime.parse(snapshot.data.date).toLocal()}',
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
+
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 decoration: BoxDecoration(

@@ -56,6 +56,24 @@ class _$EnrollmentEntitySerializer
         ..add(serializers.serialize(object.bankReferenceUrl,
             specifiedType: const FullType(String)));
     }
+    if (object.status != null) {
+      result
+        ..add('estado')
+        ..add(serializers.serialize(object.status,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.date != null) {
+      result
+        ..add('fecha')
+        ..add(serializers.serialize(object.date,
+            specifiedType: const FullType(String)));
+    }
+    if (object.comment != null) {
+      result
+        ..add('comentario')
+        ..add(serializers.serialize(object.comment,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -95,6 +113,18 @@ class _$EnrollmentEntitySerializer
           result.bankReferenceUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'estado':
+          result.status = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'fecha':
+          result.date = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'comentario':
+          result.comment = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -115,6 +145,12 @@ class _$EnrollmentEntity extends EnrollmentEntity {
   final String phoneBillUrl;
   @override
   final String bankReferenceUrl;
+  @override
+  final bool status;
+  @override
+  final String date;
+  @override
+  final String comment;
 
   factory _$EnrollmentEntity(
           [void Function(EnrollmentEntityBuilder) updates]) =>
@@ -126,7 +162,10 @@ class _$EnrollmentEntity extends EnrollmentEntity {
       this.waterBillUrl,
       this.energyBillUrl,
       this.phoneBillUrl,
-      this.bankReferenceUrl})
+      this.bankReferenceUrl,
+      this.status,
+      this.date,
+      this.comment})
       : super._();
 
   @override
@@ -146,7 +185,10 @@ class _$EnrollmentEntity extends EnrollmentEntity {
         waterBillUrl == other.waterBillUrl &&
         energyBillUrl == other.energyBillUrl &&
         phoneBillUrl == other.phoneBillUrl &&
-        bankReferenceUrl == other.bankReferenceUrl;
+        bankReferenceUrl == other.bankReferenceUrl &&
+        status == other.status &&
+        date == other.date &&
+        comment == other.comment;
   }
 
   @override
@@ -154,11 +196,17 @@ class _$EnrollmentEntity extends EnrollmentEntity {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, id.hashCode), pagareUrl.hashCode),
-                    waterBillUrl.hashCode),
-                energyBillUrl.hashCode),
-            phoneBillUrl.hashCode),
-        bankReferenceUrl.hashCode));
+                $jc(
+                    $jc(
+                        $jc(
+                            $jc($jc($jc(0, id.hashCode), pagareUrl.hashCode),
+                                waterBillUrl.hashCode),
+                            energyBillUrl.hashCode),
+                        phoneBillUrl.hashCode),
+                    bankReferenceUrl.hashCode),
+                status.hashCode),
+            date.hashCode),
+        comment.hashCode));
   }
 
   @override
@@ -169,7 +217,10 @@ class _$EnrollmentEntity extends EnrollmentEntity {
           ..add('waterBillUrl', waterBillUrl)
           ..add('energyBillUrl', energyBillUrl)
           ..add('phoneBillUrl', phoneBillUrl)
-          ..add('bankReferenceUrl', bankReferenceUrl))
+          ..add('bankReferenceUrl', bankReferenceUrl)
+          ..add('status', status)
+          ..add('date', date)
+          ..add('comment', comment))
         .toString();
   }
 }
@@ -204,6 +255,18 @@ class EnrollmentEntityBuilder
   set bankReferenceUrl(String bankReferenceUrl) =>
       _$this._bankReferenceUrl = bankReferenceUrl;
 
+  bool _status;
+  bool get status => _$this._status;
+  set status(bool status) => _$this._status = status;
+
+  String _date;
+  String get date => _$this._date;
+  set date(String date) => _$this._date = date;
+
+  String _comment;
+  String get comment => _$this._comment;
+  set comment(String comment) => _$this._comment = comment;
+
   EnrollmentEntityBuilder();
 
   EnrollmentEntityBuilder get _$this {
@@ -214,6 +277,9 @@ class EnrollmentEntityBuilder
       _energyBillUrl = _$v.energyBillUrl;
       _phoneBillUrl = _$v.phoneBillUrl;
       _bankReferenceUrl = _$v.bankReferenceUrl;
+      _status = _$v.status;
+      _date = _$v.date;
+      _comment = _$v.comment;
       _$v = null;
     }
     return this;
@@ -241,7 +307,10 @@ class EnrollmentEntityBuilder
             waterBillUrl: waterBillUrl,
             energyBillUrl: energyBillUrl,
             phoneBillUrl: phoneBillUrl,
-            bankReferenceUrl: bankReferenceUrl);
+            bankReferenceUrl: bankReferenceUrl,
+            status: status,
+            date: date,
+            comment: comment);
     replace(_$result);
     return _$result;
   }

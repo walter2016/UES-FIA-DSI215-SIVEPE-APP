@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'home_tab_page.dart';
 
 class HomePage extends StatefulWidget {
+  final int initialTab;
+  HomePage({ this.initialTab });
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -22,6 +24,9 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     tabController = new TabController(length: 4, vsync: this);
+    if (widget.initialTab != null) {
+      tabController.index = widget.initialTab;
+    }
   }
 
   @override

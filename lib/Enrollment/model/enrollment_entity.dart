@@ -12,24 +12,36 @@ abstract class EnrollmentEntity implements Built<EnrollmentEntity, EnrollmentEnt
   int get id;
 
   @nullable
-  @BuiltValueField(wireName: 'PagareUrl')
+  @BuiltValueField(wireName: 'pagareUrl')
   String get pagareUrl;
 
   @nullable
-  @BuiltValueField(wireName: 'ReciboAguaUrl')
+  @BuiltValueField(wireName: 'reciboAguaUrl')
   String get waterBillUrl;
 
   @nullable
-  @BuiltValueField(wireName: 'ReciboLuzUrl')
+  @BuiltValueField(wireName: 'reciboLuzUrl')
   String get energyBillUrl;
 
   @nullable
-  @BuiltValueField(wireName: 'ReciboTelefonoUrl')
+  @BuiltValueField(wireName: 'reciboTelefonoUrl')
   String get phoneBillUrl;
 
   @nullable
-  @BuiltValueField(wireName: 'ReferenciaBancariaUrl')
+  @BuiltValueField(wireName: 'referenciaBancariaUrl')
   String get bankReferenceUrl;
+
+  @nullable
+  @BuiltValueField(wireName: 'estado')
+  bool get status;
+
+  @nullable
+  @BuiltValueField(wireName: 'fecha')
+  String get date;
+
+  @nullable
+  @BuiltValueField(wireName: 'comentario')
+  String get comment;
 
   static Serializer<EnrollmentEntity> get serializer => _$enrollmentEntitySerializer;
 }

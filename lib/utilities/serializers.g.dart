@@ -8,6 +8,7 @@ part of 'serializers.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CategoryEntity.serializer)
+      ..add(EnrollmentEntity.serializer)
       ..add(ProductEntity.serializer))
     .build();
 

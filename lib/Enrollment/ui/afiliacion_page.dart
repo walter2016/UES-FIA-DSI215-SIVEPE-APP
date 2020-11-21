@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:com_app_tienda/Enrollment/model/enrollment_entity.dart';
+import 'package:com_app_tienda/Enrollment/resources/EnrollmentRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
-
 
 class Afiliacion extends StatefulWidget {
   @override
@@ -36,7 +37,7 @@ class _AfiliacionState extends State<Afiliacion> {
   bool _loadingPath5 = false;
   TextEditingController _controller = TextEditingController();
   bool sendingRequest = false;
-
+  EnrollmentRepository enrollmentRepository = new EnrollmentRepository();
   @override
   void initState() {
     super.initState();
@@ -169,10 +170,15 @@ class _AfiliacionState extends State<Afiliacion> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            sendingRequest ? Container(
-              height: 8,
-              child: LinearProgressIndicator(),
-            ) : Container(height: 0, width: 0,),
+            sendingRequest
+                ? Container(
+                    height: 8,
+                    child: LinearProgressIndicator(),
+                  )
+                : Container(
+                    height: 0,
+                    width: 0,
+                  ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               decoration: BoxDecoration(
@@ -553,7 +559,6 @@ class _AfiliacionState extends State<Afiliacion> {
     List<int> imageBytes = await bankReferenceFile.readAsBytes();
     String bankReferenceEncoded = base64Encode(imageBytes);
 
-
     // Reading water bill
     if (_paths2 == null) {
       showAlert('Ingrese el recibo de agua');
@@ -590,26 +595,40 @@ class _AfiliacionState extends State<Afiliacion> {
     List<int> pagareBytes = await pagareFile.readAsBytes();
     String pagareBillEncoded = base64Encode(pagareBytes);
 
+    EnrollmentEntity enrollmentEntity = new EnrollmentEntity();
+    enrollmentEntity = enrollmentEntity.rebuild((b) => b
+      ..bankReferenceUrl = bankReferenceEncoded
+      ..waterBillUrl = waterBillEncoded
+      ..phoneBillUrl = phoneBillEncoded
+      ..energyBillUrl = energyBillEncoded
+      ..pagareUrl = pagareBillEncoded);
+
+    try {
+      final result =
+          await enrollmentRepository.createEnrollmentRequest(enrollmentEntity);
+      showAlert('Se envió la solicitud de afiliación', title: 'Exito');
+    } catch (e) {
+      showAlert(e.toString());
+    }
   }
 
-  showAlert(String message) {
+  showAlert(String message, {String title}) {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: Text('$message'),
-          actions: [
-            RaisedButton(
-              child: Text('Ok'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              color: Colors.red,
-            ),
-          ],
-        );
-      }
-    );
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(title != null ? '$title' : 'Error'),
+            content: Text('$message'),
+            actions: [
+              RaisedButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                color: Colors.red,
+              ),
+            ],
+          );
+        });
   }
 }

@@ -97,7 +97,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/Tabs', arguments: 4);
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return HomePage(initialTab: 1,);
+                      }
+                    ));
                   },
                   leading: Icon(
                     Icons.favorite,
