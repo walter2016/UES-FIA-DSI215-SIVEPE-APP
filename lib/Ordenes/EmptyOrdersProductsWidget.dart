@@ -30,12 +30,12 @@ class EmptyOrdersProductsWidget extends StatelessWidget {
                           begin: Alignment.bottomLeft,
                           end: Alignment.topRight,
                           colors: [
-                            Theme.of(context).focusColor,
-                            Theme.of(context).focusColor.withOpacity(0.1),
+                            Color(0xFFff9100),
+                            Color(0xFFff9100).withOpacity(0.2),
                           ])),
                   child: Icon(
                     Icons.inbox,
-                    color: Theme.of(context).primaryColor,
+                    color: Colors.white,
                     size: 70,
                   ),
                 ),
@@ -46,7 +46,7 @@ class EmptyOrdersProductsWidget extends StatelessWidget {
                     width: 80,
                     height: 80,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor.withOpacity(0.1),
+                      color: Color(0xFFff9100).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(150),
                     ),
                   ),
@@ -58,7 +58,7 @@ class EmptyOrdersProductsWidget extends StatelessWidget {
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor.withOpacity(0.15),
+                      color: Color(0xFFff9100).withOpacity(0.15),
                       borderRadius: BorderRadius.circular(150),
                     ),
                   ),
@@ -70,12 +70,10 @@ class EmptyOrdersProductsWidget extends StatelessWidget {
               child: Text(
                 'No tengo ningún artículo pedido',
                 textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .display2
-                    .merge(TextStyle(fontWeight: FontWeight.w300)),
+                style: Theme.of(context).textTheme.headline3,
               ),
             ),
+            SizedBox(height: 15),
             FlatButton(
               onPressed: () {
                 Navigator.push(

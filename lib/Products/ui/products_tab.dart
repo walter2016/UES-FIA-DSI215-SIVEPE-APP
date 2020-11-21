@@ -17,7 +17,7 @@ class _ProductsTabsState extends State<ProductsTabs> {
   void initState() {
     super.initState();
     productsBloc = BlocProvider.of<ProductsBloc>(context);
-    productsBloc.add( LoadProducts() );
+    productsBloc.add(LoadProducts());
   }
 
   @override

@@ -1,9 +1,9 @@
 import 'package:com_app_tienda/Cart/CartItemWidget.dart';
 import 'package:com_app_tienda/Cart/product.dart';
 import 'package:com_app_tienda/Pago/AgregarTarjeta.dart';
-import 'package:com_app_tienda/Pago/AgregarTarjeta2.dart';
-import 'package:com_app_tienda/Pago/AgregarTarjeta3.dart';
+
 import 'package:com_app_tienda/Pago/PagoItemWidget.dart';
+import 'package:com_app_tienda/Pago/checkout_done.dart';
 import 'package:flutter/material.dart';
 
 class RealizarPago extends StatefulWidget {
@@ -13,6 +13,8 @@ class RealizarPago extends StatefulWidget {
 
 class _RealizarPagoState extends State<RealizarPago> {
   ProductsList _productsList;
+  bool _bloquearCheck1 = false;
+  bool _bloquearCheck2 = false;
   @override
   void initState() {
     _productsList = new ProductsList();
@@ -27,7 +29,7 @@ class _RealizarPagoState extends State<RealizarPago> {
         automaticallyImplyLeading: false,
         backgroundColor: Color(0xFFff9100),
         title: Text(
-          "Realizar Pago",
+          "Realizar Pedido",
           style: TextStyle(
             fontSize: 23,
             fontWeight: FontWeight.w800,
@@ -48,6 +50,41 @@ class _RealizarPagoState extends State<RealizarPago> {
         padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 130),
         child: ListView(
           children: <Widget>[
+            SizedBox(height: 10.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  "Metodo de Pago",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
+            CheckboxListTile(
+              title: Text('Efectivo'),
+              secondary: Icon(Icons.attach_money),
+              value: _bloquearCheck1,
+              onChanged: (valor) {
+                setState(() {
+                  _bloquearCheck2 = false;
+                  _bloquearCheck1 = valor;
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: Text('Tarjeta'),
+              secondary: Icon(Icons.credit_card),
+              value: _bloquearCheck2,
+              onChanged: (valor) {
+                setState(() {
+                  _bloquearCheck1 = false;
+                  _bloquearCheck2 = valor;
+                });
+              },
+            ),
             SizedBox(height: 10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,67 +116,7 @@ class _RealizarPagoState extends State<RealizarPago> {
               subtitle: Text("1278 Loving Acres Road Kansas City, MO 64110"),
             ),
             SizedBox(height: 10.0),
-            IgnorePointer(
-              ignoring: false,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "Tarjeta de Credito",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return AgregarTarjeta();
-                          },
-                        ),
-                      );
-                    },
-                    icon: Icon(
-                      Icons.add_circle_outline_sharp,
-                    ),
-                    tooltip: 'Agregar Tarjeta',
-                  ),
-                ],
-              ),
-            ),
-            IgnorePointer(
-              ignoring: _activar,
-              child: FlatButton(
-                onPressed: () {},
-                onLongPress: () {},
-                child: Card(
-                  elevation: 4.0,
-                  child: ListTile(
-                    title: Text("John Doe"),
-                    subtitle: Text(
-                      "5506 7744 8610 9638",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    leading: Icon(
-                      Icons.credit_card,
-                      size: 40.0,
-                      color: Color(0xFFff9100),
-                    ),
-                    trailing: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.clear,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+
             SizedBox(height: 20.0),
             Text(
               "Productos",
@@ -208,7 +185,7 @@ class _RealizarPagoState extends State<RealizarPago> {
                           ),
                         ),
                         Text(
-                          "Delivery charges included",
+                          "Gastos de envío incluidos",
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w400,
@@ -219,17 +196,37 @@ class _RealizarPagoState extends State<RealizarPago> {
                   ),
                   Container(
                     padding: EdgeInsets.fromLTRB(5, 5, 10, 5),
-                    width: 150.0,
+                    width: 180.0,
                     height: 50.0,
                     child: FlatButton(
                       color: Color(0xFFff9100),
                       child: Text(
-                        "Place Order".toUpperCase(),
+                        "Realizar Pedido".toUpperCase(),
                         style: TextStyle(
                           color: Colors.white,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_bloquearCheck1 = _bloquearCheck2) {
+                          //Aqui escuando se ha seleccionado Tarjeta
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return AgregarTarjeta();
+                              },
+                            ),
+                          );
+                        } else {
+                          //Aqui escuando se ha seleccionado Efectivo
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return OrdenDoneWidget();
+                              },
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ),
                 ],

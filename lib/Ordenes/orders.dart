@@ -1,7 +1,9 @@
 import 'package:com_app_tienda/Ordenes/order.dart';
 import 'package:com_app_tienda/Ordenes/orders_products.dart';
 import 'package:com_app_tienda/body/DrawerWidget.dart';
+import 'package:com_app_tienda/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class OrdersWidget extends StatefulWidget {
   int currentTab;
@@ -31,7 +33,10 @@ class _OrdersWidgetState extends State<OrdersWidget> {
                 icon: new Icon(Icons.keyboard_backspace,
                     color: Color(0xFFFFFFFF)),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.fade, child: HomePage()));
                 }),
             backgroundColor: Color(0xFFFF9800),
             elevation: 0,
