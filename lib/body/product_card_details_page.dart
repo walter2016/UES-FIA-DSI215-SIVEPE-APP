@@ -1,11 +1,26 @@
+import 'package:com_app_tienda/Cart/blocs/cart_bloc.dart';
 import 'package:com_app_tienda/Products/model/product_entity.dart';
 import 'package:com_app_tienda/Rating/rating_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProductDetail extends StatelessWidget {
+class ProductDetail extends StatefulWidget {
   final ProductEntity product;
 
   const ProductDetail({Key key, this.product}) : super(key: key);
+
+  @override
+  _ProductDetailState createState() => _ProductDetailState();
+}
+
+class _ProductDetailState extends State<ProductDetail> {
+  CartBloc _cartBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _cartBloc = BlocProvider.of<CartBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +29,7 @@ class ProductDetail extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(
-          product.nombre,
+          widget.product.nombre,
           style: TextStyle(
             color: Color(0xFFFFFFFF),
             fontWeight: FontWeight.bold,
@@ -50,14 +65,14 @@ class ProductDetail extends StatelessWidget {
             child: Stack(
               children: [
                 Hero(
-                  tag: product.imagenUrl != null
-                      ? product.imagenUrl
+                  tag: widget.product.imagenUrl != null
+                      ? widget.product.imagenUrl
                       : 'https://d2f7anuvnar8n5.cloudfront.net/external_assets/tutorials/artwork_logos_v1/soldier.png',
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(product.imagenUrl != null
-                            ? product.imagenUrl
+                        image: NetworkImage(widget.product.imagenUrl != null
+                            ? widget.product.imagenUrl
                             : 'https://d2f7anuvnar8n5.cloudfront.net/external_assets/tutorials/artwork_logos_v1/soldier.png'),
                         fit: BoxFit.cover,
                       ),
@@ -85,7 +100,7 @@ class ProductDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            product.nombre,
+                            widget.product.nombre,
                             style: TextStyle(
                               color: Colors.grey[800],
                               fontWeight: FontWeight.bold,
@@ -106,7 +121,7 @@ class ProductDetail extends StatelessWidget {
                                 width: 4,
                               ),
                               Text(
-                                product.precio.toString(),
+                                widget.product.precio.toString(),
                                 style: TextStyle(
                                   color: Colors.grey[600],
                                   fontSize: 20,

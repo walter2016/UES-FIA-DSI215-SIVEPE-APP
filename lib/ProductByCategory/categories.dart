@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:com_app_tienda/Products/model/product_entity.dart';
+import 'package:com_app_tienda/body/product_card_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -48,7 +49,6 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                           (element) => element.nombre
                               .toLowerCase()
                               .contains(value.toLowerCase())));
-                      print(products);
                     });
                   },
                 ),
@@ -105,6 +105,14 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                       _productsList.favoritesList.removeAt(index);
                     });
                   },*/
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductDetail(
+                        product: products[index],
+                      ),
+                    ),
+                  )
                 );
               },
             ),
@@ -123,6 +131,14 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                   return ProductByCategoryGridItemWidget(
                     product: product,
                     heroTag: 'favorites_grid',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProductDetail(
+                          product: products[index],
+                        ),
+                      ),
+                    )
                   );
                 },
 //                  staggeredTileBuilder: (int index) => new StaggeredTile.fit(index % 2 == 0 ? 1 : 2),

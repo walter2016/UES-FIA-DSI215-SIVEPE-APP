@@ -7,17 +7,18 @@ class ProductByCategoryGridItemWidget extends StatelessWidget {
     Key key,
     @required this.product,
     @required this.heroTag,
+    @required this.onTap
   }) : super(key: key);
 
   final ProductEntity product;
   final String heroTag;
-
+  final Function onTap;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       highlightColor: Colors.transparent,
       splashColor: Theme.of(context).accentColor.withOpacity(0.08),
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         child: Card(
           child: Column(
