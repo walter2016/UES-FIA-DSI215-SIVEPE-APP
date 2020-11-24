@@ -517,29 +517,37 @@ class _AfiliacionState extends State<Afiliacion> {
                                   )
                                 : const SizedBox(),
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 15.0),
-                    width: double.infinity,
-                    child: RaisedButton(
-                      elevation: 4.0,
-                      onPressed: sendEnrollmentRequest,
-                      padding: EdgeInsets.all(10.0),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: 8.0, left: 8.0, right: 8.0, bottom: 16.0),
+                    child: FlatButton(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(4.0),
                       ),
-                      color: Color(0xFFFF9800),
-                      child: Text(
-                        'Subir Documentos',
-                        style: TextStyle(
-                          color: Color(0xFF527DAA),
-                          letterSpacing: 1.5,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'OpenSans',
+                      color: Color(0xFFff9100),
+                      onPressed: sendEnrollmentRequest,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 15.0,
+                          horizontal: 10.0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                "Subir Documentos",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

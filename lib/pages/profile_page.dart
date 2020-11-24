@@ -1,5 +1,7 @@
+import 'package:com_app_tienda/Dirreccion/andress_list_page.dart';
 import 'package:com_app_tienda/Enrollment/model/enrollment_entity.dart';
 import 'package:com_app_tienda/Enrollment/resources/EnrollmentRepository.dart';
+import 'package:com_app_tienda/Pago/AgregarTarjeta.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_bloc.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_event.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_state.dart';
@@ -7,7 +9,6 @@ import 'package:com_app_tienda/Users/models/user_entity.dart';
 import 'package:com_app_tienda/models/user.dart';
 import 'package:com_app_tienda/pages/ProfileSettingsDialog.dart';
 import 'package:com_app_tienda/Enrollment/ui/afiliacion_page.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -109,8 +110,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               FutureBuilder<EnrollmentEntity>(
                 future: enrollmentRepository.getEnrollmentRequest(),
-                builder: (BuildContext context, AsyncSnapshot<EnrollmentEntity> snapshot) {
-                  if (!snapshot.hasData && snapshot.connectionState == ConnectionState.waiting) {
+                builder: (BuildContext context,
+                    AsyncSnapshot<EnrollmentEntity> snapshot) {
+                  if (!snapshot.hasData &&
+                      snapshot.connectionState == ConnectionState.waiting) {
                     return Container(
                       height: 40,
                       width: double.infinity,
@@ -121,42 +124,53 @@ class _ProfilePageState extends State<ProfilePage> {
                   }
                   if (snapshot.data == null) {
                     return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                       decoration: BoxDecoration(
                         color: Color(0xFFFFFFFF),
                         borderRadius: BorderRadius.circular(6),
-                        boxShadow: [BoxShadow(offset: Offset(0, 3), blurRadius: 10)],
+                        boxShadow: [
+                          BoxShadow(offset: Offset(0, 3), blurRadius: 10)
+                        ],
                       ),
                       child: Column(
                         children: [
                           Text('No tiene solicitudes pendientes'),
-                          Container(
-                            padding: EdgeInsets.symmetric(vertical: 15.0),
-                            width: double.infinity,
-                            child: RaisedButton(
-                              elevation: 4.0,
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 8.0, left: 8.0, right: 8.0, bottom: 16.0),
+                            child: FlatButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.0),
+                              ),
+                              color: Color(0xFFff9100),
                               onPressed: () => Navigator.push(
                                   context,
                                   PageTransition(
                                       type: PageTransitionType.fade,
                                       child: Afiliacion())),
-                              padding: EdgeInsets.all(10.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              color: Colors.yellow,
-                              child: Text(
-                                'Ingresar Solicitud',
-                                style: TextStyle(
-                                  color: Color(0xFF527DAA),
-                                  letterSpacing: 1.5,
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'OpenSans',
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 15.0,
+                                  horizontal: 10.0,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Text(
+                                        "Ingresar Solicitud",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     );
@@ -167,7 +181,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     decoration: BoxDecoration(
                       color: Color(0xFFFFFFFF),
                       borderRadius: BorderRadius.circular(6),
-                      boxShadow: [BoxShadow(offset: Offset(0, 3), blurRadius: 10)],
+                      boxShadow: [
+                        BoxShadow(offset: Offset(0, 3), blurRadius: 10)
+                      ],
                     ),
                     child: ListView(
                       shrinkWrap: true,
@@ -180,14 +196,15 @@ class _ProfilePageState extends State<ProfilePage> {
                             'Afiliación',
                           ),
                         ),
-
                         ListTile(
                           dense: true,
                           title: Text(
                             'Estado:',
                           ),
                           trailing: Text(
-                            snapshot.data.status == true ? 'Aprobado' : 'No aprobado',
+                            snapshot.data.status == true
+                                ? 'Aprobado'
+                                : 'No aprobado',
                           ),
                         ),
                         ListTile(
@@ -204,7 +221,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 },
               ),
-
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 decoration: BoxDecoration(
@@ -212,27 +228,111 @@ class _ProfilePageState extends State<ProfilePage> {
                   borderRadius: BorderRadius.circular(6),
                   boxShadow: [BoxShadow(offset: Offset(0, 3), blurRadius: 10)],
                 ),
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 15.0),
-                  width: double.infinity,
-                  child: RaisedButton(
-                    elevation: 4.0,
+                child: ListView(
+                  shrinkWrap: true,
+                  primary: false,
+                  children: <Widget>[
+                    ListTile(
+                      leading: Icon(
+                        Icons.settings,
+                        color: Colors.grey[800],
+                      ),
+                      title: Text(
+                        'Configuraciones de la cuenta',
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return ListaDireccionPage();
+                            },
+                          ),
+                        );
+                      },
+                      dense: true,
+                      title: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.location_on,
+                            size: 22,
+                            color: Colors.grey[800],
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Direcciones de envío',
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                        ],
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return AgregarTarjeta();
+                            },
+                          ),
+                        );
+                      },
+                      dense: true,
+                      title: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.credit_card,
+                            size: 22,
+                            color: Colors.grey[800],
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Tarjetas',
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                decoration: BoxDecoration(
+                  color: Color(0xFFFFFFFF),
+                  borderRadius: BorderRadius.circular(6),
+                  boxShadow: [BoxShadow(offset: Offset(0, 3), blurRadius: 10)],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      top: 8.0, left: 8.0, right: 8.0, bottom: 16.0),
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    color: Color(0xFFff9100),
                     onPressed: () {
                       authenticationBloc.add(LoggedOut());
                     },
-                    padding: EdgeInsets.all(10.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    color: Colors.yellow,
-                    child: Text(
-                      'Cerrar Sesión',
-                      style: TextStyle(
-                        color: Color(0xFF527DAA),
-                        letterSpacing: 1.5,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'OpenSans',
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 15.0,
+                        horizontal: 10.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              "Cerrar Seccion",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

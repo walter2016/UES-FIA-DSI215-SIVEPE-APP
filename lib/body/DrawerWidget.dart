@@ -1,4 +1,3 @@
-import 'package:com_app_tienda/Categories/ui/categories_tab.dart';
 import 'package:com_app_tienda/Ordenes/orders.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_bloc.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_event.dart';
@@ -84,7 +83,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/Orders', arguments: 0);
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return HomePage(
+                        initialTab: 2,
+                      );
+                    }));
                   },
                   leading: Icon(
                     Icons.shopping_cart,
@@ -97,11 +101,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return HomePage(initialTab: 1,);
-                      }
-                    ));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return HomePage(
+                        initialTab: 1,
+                      );
+                    }));
                   },
                   leading: Icon(
                     Icons.favorite,
