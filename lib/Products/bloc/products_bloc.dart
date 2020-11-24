@@ -11,14 +11,29 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   Stream<ProductsState> mapEventToState(ProductsEvent event) async* {
     if (event is LoadProducts) {
       yield* _mapLoadProductsToState();
+    }
+    else if (event is LoadProductsByCategory) {
+      yield* _mapLoadProductsByCategoryToState(event);
     } else if (event is LoadProductsSuccess) {
       yield* _mapLoadProductsSuccess(event);
     }
   }
 
   Stream<ProductsState> _mapLoadProductsToState() async* {
+    yield ProductsLoadInProgress();
     try {
       final products = await productsRepository.getProducts();
+      add( LoadProductsSuccess(products) );
+    } catch(e) {
+      print(e.toString());
+      yield ProductsLoadFailure();
+    }
+  }
+
+  Stream<ProductsState> _mapLoadProductsByCategoryToState(LoadProductsByCategory event) async* {
+    yield ProductsLoadInProgress();
+    try {
+      final products = await productsRepository.getProductsByCategory(event?.categoryId);
       add( LoadProductsSuccess(products) );
     } catch(e) {
       print(e.toString());

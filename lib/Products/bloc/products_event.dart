@@ -12,6 +12,15 @@ class ProductsEvent extends Equatable {
 
 class LoadProducts extends ProductsEvent {}
 
+class LoadProductsByCategory extends ProductsEvent {
+  final int categoryId;
+
+  LoadProductsByCategory(this.categoryId);
+
+  @override
+  List<Object> get props => [categoryId];
+}
+
 class LoadProductsSuccess extends ProductsEvent {
   final BuiltList<ProductEntity> products;
 

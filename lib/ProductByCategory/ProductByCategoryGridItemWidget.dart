@@ -1,4 +1,5 @@
 import 'package:com_app_tienda/Cart/product.dart';
+import 'package:com_app_tienda/Products/model/product_entity.dart';
 import 'package:flutter/material.dart';
 
 class ProductByCategoryGridItemWidget extends StatelessWidget {
@@ -8,7 +9,7 @@ class ProductByCategoryGridItemWidget extends StatelessWidget {
     @required this.heroTag,
   }) : super(key: key);
 
-  final Product product;
+  final ProductEntity product;
   final String heroTag;
 
   @override
@@ -23,22 +24,22 @@ class ProductByCategoryGridItemWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Hero(
-                tag: this.heroTag + product.id,
-                child: Image.asset(product.image),
+                tag: this.heroTag + product.id.toString(),
+                child: Image.network(product.imagenUrl ?? 'https://via.placeholder.com/350x350'),
               ),
               SizedBox(height: 12),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: Text(
-                  product.name,
+                  product.nombre,
                   style: Theme.of(context).textTheme.body2,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Text(
-                  product.getPrice(),
+                  '\$${product.precio.toStringAsFixed(2)}',
                   style: Theme.of(context).textTheme.title,
                 ),
               ),

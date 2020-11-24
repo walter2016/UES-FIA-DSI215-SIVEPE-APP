@@ -18,6 +18,7 @@ class CategoriesBloc extends Bloc<CategoryEvent, CategoriesState> {
   }
 
   Stream<CategoriesState> _mapLoadCategoriesToState(LoadCategories event) async* {
+    yield CategoriesLoadInProgress();
     try {
       final categories = await categoryRepository.getCategories();
       add(LoadCategoriesSuccess(categories));

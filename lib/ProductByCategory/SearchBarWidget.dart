@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatelessWidget {
+  final Function onChange;
   SearchBarWidget({
     Key key,
+    @required this.onChange
   }) : super(key: key);
 
   @override
@@ -16,6 +18,7 @@ class SearchBarWidget extends StatelessWidget {
         alignment: Alignment.centerRight,
         children: <Widget>[
           TextField(
+            onChanged: onChange,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.all(12),
               hintText: 'Buscar',

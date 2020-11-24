@@ -1,15 +1,35 @@
 import 'package:com_app_tienda/Categories/model/category_entity.dart';
 import 'package:com_app_tienda/ProductByCategory/categories.dart';
+import 'package:com_app_tienda/Products/bloc/products_bloc.dart';
+import 'package:com_app_tienda/Products/bloc/products_event.dart';
+import 'package:com_app_tienda/Products/bloc/products_state.dart';
 import 'package:com_app_tienda/Products/model/product_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DetalleCategoria extends StatelessWidget {
+class DetalleCategoria extends StatefulWidget {
   final CategoryEntity category;
 
   const DetalleCategoria({Key key, this.category}) : super(key: key);
+
+  @override
+  _DetalleCategoriaState createState() => _DetalleCategoriaState();
+}
+
+class _DetalleCategoriaState extends State<DetalleCategoria> {
+
+  ProductsBloc _productsBloc;
+
+  @override
+  void initState() {
+    _productsBloc = BlocProvider.of<ProductsBloc>(context);
+    _productsBloc.add(LoadProductsByCategory(widget.category?.id));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    ProductEntity product;
+
     return Scaffold(
       // each product have a color
 
@@ -23,10 +43,20 @@ class DetalleCategoria extends StatelessWidget {
           ),
 */
           Expanded(
-            child: Container(
-              child: CategoriesWidget(),
+            child: BlocBuilder<ProductsBloc, ProductsState>(
+              cubit: _productsBloc,
+              builder:(BuildContext context, ProductsState state){
+                if (state is ProductsLoadInProgress) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is ProductsLoaded) {
+                  return CategoriesWidget(state.products);
+                }
+                return Container();
+              }
             ),
-            flex: 4,
           )
         ],
       ),
@@ -42,7 +72,7 @@ class DetalleCategoria extends StatelessWidget {
           }),
       backgroundColor: Color(0xFFFF9800),
       title: Text(
-        category.nombre,
+        widget.category.nombre,
         style: TextStyle(
           color: Color(0xFFFFFFFF),
           fontWeight: FontWeight.bold,
