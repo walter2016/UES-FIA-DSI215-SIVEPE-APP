@@ -30,8 +30,14 @@ class CartState extends Equatable {
   }
 }
 
-class CartLine {
-  ProductEntity product;
-  int quantity;
+class CartLine extends Equatable {
+  final ProductEntity product;
+  final int quantity;
   CartLine({ this.product, this.quantity });
+
+  @override
+  List<Object> get props => [product, quantity];
+
+  @override
+  bool get stringify => true;
 }

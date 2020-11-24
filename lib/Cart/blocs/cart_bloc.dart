@@ -13,26 +13,29 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     } else if (event is RemoveProductFromCart) {
       yield* _mapRemoveProductFromCartState(event);
     }
+
   }
 
-  Stream _mapAddProductToCartToState(AddProductToCart event) async* {
+  Stream<CartState> _mapAddProductToCartToState(AddProductToCart event) async* {
     List<CartLine> lines = [...state.lines];
     if (!state.isProductOnCart(event?.product?.id)) {
       lines.add(CartLine(product: event.product, quantity: 1));
     } else {
        int index = lines.lastIndexWhere((element) => element.product.id == event.product.id);
        CartLine line = lines.elementAt(index);
-       line.quantity++;
+       CartLine newLine = CartLine(product: line.product, quantity: line.quantity + 1);
+       lines.insert(index, newLine);
+       lines.removeAt(index+1);
     }
     yield CartState(lines);
   }
 
-  Stream _mapRemoveProductFromCartState(RemoveProductFromCart event) async* {
+  Stream<CartState> _mapRemoveProductFromCartState(RemoveProductFromCart event) async* {
     List<CartLine> lines = [...state.lines];
     int index = lines.lastIndexWhere((element) => element.product.id == event.product.id);
     CartLine line = lines.elementAt(index);
     if (line.quantity > 1) {
-      line.quantity--;
+      line = CartLine(product: line.product, quantity: line.quantity - 1);
     } else if(line.quantity == 0) {
       lines.removeAt(index);
     }
