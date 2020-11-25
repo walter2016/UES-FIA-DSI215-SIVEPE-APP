@@ -10,7 +10,7 @@ import 'home_tab_page.dart';
 
 class HomePage extends StatefulWidget {
   final int initialTab;
-  HomePage({ this.initialTab });
+  HomePage({this.initialTab});
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage>
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TabController tabController;
   CartBloc _cartBloc;
-  String title = "Home";
+  String title = "Incio";
 
   @override
   void initState() {
@@ -128,7 +128,14 @@ class _HomePageState extends State<HomePage>
         ),
         IconButton(
           icon: Icon(Icons.settings),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (BuildContext context) {
+              return HomePage(
+                initialTab: 3,
+              );
+            }));
+          },
         ),
         SizedBox(width: 20 / 2)
       ],

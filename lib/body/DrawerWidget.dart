@@ -44,7 +44,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/Tabs', arguments: 1);
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return HomePage(
+                        initialTab: 3,
+                      );
+                    }));
                   },
                   child: UserAccountsDrawerHeader(
                     decoration: BoxDecoration(
@@ -174,7 +179,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/Tabs', arguments: 1);
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return HomePage(
+                        initialTab: 3,
+                      );
+                    }));
                   },
                   leading: Icon(
                     Icons.settings,
