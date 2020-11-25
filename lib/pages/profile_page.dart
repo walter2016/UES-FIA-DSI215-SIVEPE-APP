@@ -1,14 +1,15 @@
 import 'package:com_app_tienda/Dirreccion/andress_list_page.dart';
 import 'package:com_app_tienda/Enrollment/model/enrollment_entity.dart';
 import 'package:com_app_tienda/Enrollment/resources/EnrollmentRepository.dart';
-import 'package:com_app_tienda/Pago/AgregarTarjeta.dart';
+import 'package:com_app_tienda/Ordenes/orders.dart';
+import 'package:com_app_tienda/Pago/AgregarTarjetaPerfil.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_bloc.dart';
-import 'package:com_app_tienda/Users/blocs/authentication_event.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_state.dart';
 import 'package:com_app_tienda/Users/models/user_entity.dart';
 import 'package:com_app_tienda/models/user.dart';
 import 'package:com_app_tienda/pages/ProfileSettingsDialog.dart';
 import 'package:com_app_tienda/Enrollment/ui/afiliacion_page.dart';
+import 'package:com_app_tienda/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -48,6 +49,86 @@ class _ProfilePageState extends State<ProfilePage> {
           padding: EdgeInsets.symmetric(vertical: 7),
           child: Column(
             children: <Widget>[
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Color(0xFFFFFFFF),
+                  borderRadius: BorderRadius.circular(6),
+                  boxShadow: [BoxShadow(offset: Offset(0, 3), blurRadius: 10)],
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: FlatButton(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) {
+                            return HomePage(
+                              initialTab: 1,
+                            );
+                          }));
+                        },
+                        child: Column(
+                          children: <Widget>[
+                            Icon(Icons.favorite),
+                            Text(
+                              'Deseos',
+                              style: Theme.of(context).textTheme.body1,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: FlatButton(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) {
+                            return HomePage(
+                              initialTab: 2,
+                            );
+                          }));
+                        },
+                        child: Column(
+                          children: <Widget>[
+                            Icon(Icons.shopping_cart),
+                            Text(
+                              'Carrito',
+                              style: Theme.of(context).textTheme.body1,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: FlatButton(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: OrdersWidget()));
+                        },
+                        child: Column(
+                          children: <Widget>[
+                            Icon(Icons.assignment),
+                            Text(
+                              'Ordenes',
+                              style: Theme.of(context).textTheme.body1,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 decoration: BoxDecoration(
@@ -273,7 +354,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (BuildContext context) {
-                              return AgregarTarjeta();
+                              return AgregarTarjetaPerfil();
                             },
                           ),
                         );
@@ -297,47 +378,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                decoration: BoxDecoration(
-                  color: Color(0xFFFFFFFF),
-                  borderRadius: BorderRadius.circular(6),
-                  boxShadow: [BoxShadow(offset: Offset(0, 3), blurRadius: 10)],
-                ),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      top: 8.0, left: 8.0, right: 8.0, bottom: 16.0),
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    color: Color(0xFFff9100),
-                    onPressed: () {
-                      authenticationBloc.add(LoggedOut());
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 15.0,
-                        horizontal: 10.0,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              "Cerrar Seccion",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         ),

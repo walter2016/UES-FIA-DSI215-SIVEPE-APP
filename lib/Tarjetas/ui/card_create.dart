@@ -173,7 +173,7 @@ class _CardCreate extends State<CardCreate> {
           width: MediaQuery.of(context).size.width - 20,
           child: RaisedButton(
             child: Text(
-              'Save Card',
+              'Guardar Tarjeta',
               style: TextStyle(color: Colors.white),
             ),
             color: Colors.lightBlue,
@@ -195,10 +195,25 @@ class _CardCreate extends State<CardCreate> {
     );
 
     return new Scaffold(
-        appBar: MyAppBar(
-          appBarTitle: 'Create Card',
-          leadingIcon: Icons.arrow_back,
-          context: context,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Color(0xFFff9100),
+          title: Text(
+            "Crear Tarjeta",
+            style: TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.keyboard_backspace,
+              color: Color(0xFFFFFFFF),
+            ),
+          ),
         ),
         backgroundColor: Colors.grey[100],
         body: ListView(

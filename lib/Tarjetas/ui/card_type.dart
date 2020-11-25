@@ -12,13 +12,13 @@ class CardType extends StatelessWidget {
       child: Text.rich(
         TextSpan(
             text:
-                'You can now add gift cards with a specific balance into wallet. When the card hits \$0.00 it will automatically dissapear. Want to know if your gift card will link? ',
-            style: TextStyle(fontSize: 14.0, color: Colors.grey[700]),
+                'Por favor seleccione el tipo de tarjeta que desea ingresar, solo esta habilitado para VISA y MASTERCARD',
+            style: TextStyle(fontSize: 14.0, color: Colors.grey[800]),
             children: <TextSpan>[
-              TextSpan(
+              /* TextSpan(
                   text: 'Learn More',
                   style: TextStyle(
-                      color: Colors.lightBlue, fontWeight: FontWeight.bold))
+                      color: Colors.lightBlue, fontWeight: FontWeight.bold)) */
             ]),
         softWrap: true,
         textAlign: TextAlign.center,
@@ -26,29 +26,40 @@ class CardType extends StatelessWidget {
     );
 
     return Scaffold(
-        appBar: MyAppBar(
-            appBarTitle: 'Select Type',
-            leadingIcon: Icons.clear,
-            context: context),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Color(0xFFff9100),
+          title: Text(
+            " Tipo de Tarjeta",
+            style: TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.keyboard_backspace,
+              color: Color(0xFFFFFFFF),
+            ),
+          ),
+        ),
         body: Container(
             padding: EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 0.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 _buildRaisedButton(
-                    buttonColor: Colors.lightBlue,
-                    buttonText: 'Credit Card',
+                    buttonColor: Color(0xFFff9100),
+                    buttonText: 'Tarjeta de Credito',
                     textColor: Colors.white,
                     context: context),
                 _buildRaisedButton(
-                    buttonColor: Colors.grey[100],
-                    buttonText: 'Debit Card',
-                    textColor: Colors.grey[600],
-                    context: context),
-                _buildRaisedButton(
-                    buttonColor: Colors.grey[100],
-                    buttonText: 'Gift Card',
-                    textColor: Colors.grey[600],
+                    buttonColor: Color(0xFFff9100),
+                    buttonText: 'Tarjeta de Debito',
+                    textColor: Colors.white,
                     context: context),
                 _buildTextInfo,
               ],
@@ -70,8 +81,7 @@ class CardType extends StatelessWidget {
             child: CardCreate(),
           );
           blocProviderCardCreate.bloc.selectCardType(buttonText);
-          Navigator.push(
-              context, 
+          Navigator.push(context,
               MaterialPageRoute(builder: (context) => blocProviderCardCreate));
         },
         color: buttonColor,

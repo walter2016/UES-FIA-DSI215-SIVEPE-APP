@@ -54,10 +54,16 @@ class _CardWallet extends State<CardWallet> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final _screenSize = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: MyAppBar(
-          appBarTitle: 'Wallet',
-          leadingIcon: Icons.arrow_back,
-          context: context,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Color(0xFFff9100),
+          title: Text(
+            "Guardando Tarjeta",
+            style: TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
         ),
         body: Center(
           child: Column(
@@ -91,7 +97,7 @@ class _CardWallet extends State<CardWallet> with TickerProviderStateMixin {
               FadeTransition(
                 opacity: opacityAnimation,
                 child: Text(
-                  'Card Added',
+                  'Tarjeta Agregada',
                   style: TextStyle(
                     color: Colors.lightBlue,
                     fontSize: 16.0,
