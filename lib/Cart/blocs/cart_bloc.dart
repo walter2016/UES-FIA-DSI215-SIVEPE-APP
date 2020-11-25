@@ -37,10 +37,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     if (line.quantity > 1) {
       int index = lines.lastIndexWhere((element) => element.product.id == event.product.id);
       CartLine line = lines.elementAt(index);
-      CartLine newLine = CartLine(product: line.product, quantity: line.quantity + 1);
+      CartLine newLine = CartLine(product: line.product, quantity: line.quantity - 1);
       lines.insert(index, newLine);
       lines.removeAt(index+1);
-    } else if(line.quantity == 0) {
+    } else if(line.quantity == 1) {
       lines.removeAt(index);
     }
     yield CartState(lines);

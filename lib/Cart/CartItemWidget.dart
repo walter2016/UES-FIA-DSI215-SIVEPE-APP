@@ -1,12 +1,16 @@
-import 'package:com_app_tienda/Cart/product.dart';
+import 'package:com_app_tienda/Cart/blocs/cart_bloc.dart';
+import 'package:com_app_tienda/Cart/blocs/cart_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'blocs/cart_state.dart';
 
 class CartItemWidget extends StatefulWidget {
-  String heroTag;
-  Product product;
-  int quantity;
+  final String heroTag;
+  final CartLine cartLine;
+  final int quantity;
 
-  CartItemWidget({Key key, this.product, this.heroTag, this.quantity = 1})
+  CartItemWidget({Key key, this.cartLine, this.heroTag, this.quantity = 1})
       : super(key: key);
 
   @override
@@ -14,6 +18,15 @@ class CartItemWidget extends StatefulWidget {
 }
 
 class _CartItemWidgetState extends State<CartItemWidget> {
+
+  CartBloc _cartBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _cartBloc = BlocProvider.of<CartBloc>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -24,14 +37,14 @@ class _CartItemWidgetState extends State<CartItemWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Hero(
-                tag: widget.heroTag + widget.product.id,
+                tag: widget.heroTag + widget.cartLine.product.id.toString(),
                 child: Container(
                   height: 90,
                   width: 90,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                     image: DecorationImage(
-                        image: AssetImage(widget.product.image),
+                        image: NetworkImage(widget.cartLine.product.imagenUrl ?? 'https://via.placeholder.com/350x350.png'),
                         fit: BoxFit.cover),
                   ),
                 ),
@@ -46,13 +59,13 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            widget.product.name,
+                            widget.cartLine.product.nombre,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             style: Theme.of(context).textTheme.subhead,
                           ),
                           Text(
-                            widget.product.getPrice(),
+                            '\$${widget.cartLine.product.precio.toStringAsFixed(2)}',
                             style: Theme.of(context).textTheme.display1,
                           ),
                         ],
@@ -64,26 +77,16 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         IconButton(
-                          onPressed: () {
-                            setState(() {
-                              widget.quantity =
-                                  this.incrementQuantity(widget.quantity);
-                            });
-                          },
+                          onPressed: incrementQuantity,
                           iconSize: 30,
                           padding: EdgeInsets.symmetric(horizontal: 5),
                           icon: Icon(Icons.add_circle_outline),
                           color: Theme.of(context).hintColor,
                         ),
-                        Text(widget.quantity.toString(),
+                        Text(widget.cartLine.quantity.toString(),
                             style: Theme.of(context).textTheme.subhead),
                         IconButton(
-                          onPressed: () {
-                            setState(() {
-                              widget.quantity =
-                                  this.decrementQuantity(widget.quantity);
-                            });
-                          },
+                          onPressed: decrementQuantity,
                           iconSize: 30,
                           padding: EdgeInsets.symmetric(horizontal: 5),
                           icon: Icon(Icons.remove_circle_outline),
@@ -101,19 +104,11 @@ class _CartItemWidgetState extends State<CartItemWidget> {
     );
   }
 
-  incrementQuantity(int quantity) {
-    if (quantity <= 99) {
-      return ++quantity;
-    } else {
-      return quantity;
-    }
+  incrementQuantity() {
+    _cartBloc.add(AddProductToCart(widget.cartLine.product));
   }
 
-  decrementQuantity(int quantity) {
-    if (quantity > 1) {
-      return --quantity;
-    } else {
-      return quantity;
-    }
+  decrementQuantity() {
+    _cartBloc.add(RemoveProductFromCart(widget.cartLine.product));
   }
 }

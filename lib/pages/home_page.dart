@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage>
   TabController tabController;
   CartBloc _cartBloc;
   String title = "Home";
-  //Color _color = Hexcolor('#FF9800');
 
   @override
   void initState() {

@@ -1,4 +1,5 @@
 import 'package:com_app_tienda/Products/model/product_entity.dart';
+import 'package:com_app_tienda/utilities/serializers.dart';
 import 'package:equatable/equatable.dart';
 
 class CartState extends Equatable {
@@ -28,6 +29,10 @@ class CartState extends Equatable {
     }
     return false;
   }
+
+  List toJson() {
+    return lines.map((element) => element.toJson()).toList();
+  }
 }
 
 class CartLine extends Equatable {
@@ -40,4 +45,11 @@ class CartLine extends Equatable {
 
   @override
   bool get stringify => true;
+
+  Map toJson() {
+    return {
+      'product': serializers.serializeWith(ProductEntity.serializer, product),
+      'quantity': quantity
+    };
+  }
 }
