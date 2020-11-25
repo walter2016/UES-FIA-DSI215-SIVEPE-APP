@@ -12,12 +12,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './pages/home_page.dart' as page;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  firebaseAuth.idTokenChanges().listen((event) {
+    event.getIdToken().then((token) {
+      SharedPreferences.getInstance().then((SharedPreferences shared) {
+        shared.setString('token', token);
+      });
+    });
+  });
   final UserRepository userRepository =
       UserRepository(firebaseAuth: firebaseAuth);
   return runApp(BlocProvider(
@@ -30,8 +38,7 @@ Future<void> main() async {
         create: (BuildContext context) =>
             ProductsBloc(productsRepository: ProductsRepository()),
         child: BlocProvider(
-          create: (BuildContext context) =>
-            CartBloc(),
+          create: (BuildContext context) => CartBloc(),
           child: App(),
         ),
       ),
@@ -225,7 +232,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                       height: 80,
                                       padding: EdgeInsets.all(10),
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(50),
+                                          borderRadius:
+                                              BorderRadius.circular(50),
                                           color: Colors.white.withOpacity(.5)),
                                       child: InkWell(
                                         onTap: () {
@@ -252,14 +260,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                                       .circle,
                                                                   color: Colors
                                                                       .orange),
-                                                          child: hideIcon == false
-                                                              ? Icon(
-                                                                  Icons
-                                                                      .arrow_forward,
-                                                                  color: Colors
-                                                                      .white,
-                                                                )
-                                                              : Container(),
+                                                          child:
+                                                              hideIcon == false
+                                                                  ? Icon(
+                                                                      Icons
+                                                                          .arrow_forward,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    )
+                                                                  : Container(),
                                                         )),
                                               ),
                                             ),
