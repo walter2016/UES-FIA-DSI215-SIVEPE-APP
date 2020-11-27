@@ -3,6 +3,7 @@ import 'package:com_app_tienda/Cart/blocs/cart_state.dart';
 import 'package:com_app_tienda/Cart/cart_page.dart';
 import 'package:com_app_tienda/WishList/favorites.dart';
 import 'package:com_app_tienda/body/DrawerWidget.dart';
+import 'package:com_app_tienda/busquedaProductos/busqueda_products.dart';
 import 'package:com_app_tienda/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -124,7 +125,12 @@ class _HomePageState extends State<HomePage>
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (BuildContext context) {
+              return BusquedaProductos();
+            }));
+          },
         ),
         IconButton(
           icon: Icon(Icons.settings),
