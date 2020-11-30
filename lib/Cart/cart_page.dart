@@ -133,7 +133,8 @@ class _CartWidgetState extends State<CartWidget> {
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                                  Text("\$${(state.total + 2).toStringAsFixed(2)}"),
+                                  Text(
+                                      "\$${(state.total + 2).toStringAsFixed(2)}"),
                                 ],
                               ),
                             ),

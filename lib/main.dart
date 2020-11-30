@@ -7,6 +7,7 @@ import 'package:com_app_tienda/Products/bloc/products_bloc.dart';
 import 'package:com_app_tienda/Products/resources/products_repository.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_bloc.dart';
 import 'package:com_app_tienda/Users/resources/user_repository.dart';
+import 'package:com_app_tienda/WishList/bloc/deseos_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,10 @@ Future<void> main() async {
             ProductsBloc(productsRepository: ProductsRepository()),
         child: BlocProvider(
           create: (BuildContext context) => CartBloc(),
-          child: App(),
+          child: BlocProvider(
+            create: (BuildContext context) => DeseosBloc(),
+            child: App(),
+          ),
         ),
       ),
     ),
