@@ -15,6 +15,9 @@ import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './pages/home_page.dart' as page;
 
+// PARA EJEMPLO DE SHARED
+import 'dart:convert';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -26,6 +29,31 @@ Future<void> main() async {
       });
     });
   });
+  // CREAR LA LISTA
+  final listaTarjetas = [
+    {
+      "nombre": "Carlos",
+      "numero": 41111111111111
+    },
+    {
+      "nombre": "Juan",
+      "numero": 41111111111111
+    }
+  ];
+  final json = jsonEncode(listaTarjetas);
+  // GUARDAR LA LISTA
+  final shared = await SharedPreferences.getInstance();
+
+  shared.setString("tarjetas", json);
+
+  // OBTENER LA LISTA
+
+  final data = shared.getString("tarjetas");
+
+  final decoded = jsonDecode(data);
+
+  print(decoded);
+
   final UserRepository userRepository =
       UserRepository(firebaseAuth: firebaseAuth);
   return runApp(BlocProvider(

@@ -26,14 +26,4 @@ class ProductsRepository {
     final Response response = await dio.get('Productos?categoria=$categoryId', options: options);
     return deserializeListOf<ProductEntity>(response.data);
   }
-  
-  Future<BuiltList<ProductEntity>> getProductsByCategoryId(int categoryId) async {
-    final shared = await SharedPreferences.getInstance();
-    final token = shared.getString('token');
-    Options options = new Options(headers: {
-      'Authorization': 'Bearer $token'
-    });
-    final Response response = await dio.get('productos?categoria=$categoryId', options: options);
-    return deserializeListOf<ProductEntity>(response.data);
-  }
 }
