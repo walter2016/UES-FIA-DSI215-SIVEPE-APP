@@ -1,6 +1,8 @@
 import 'package:com_app_tienda/Tarjetas/ui/card_type.dart';
 import 'package:com_app_tienda/Tarjetas/ui/widgets/card_list.dart';
+import 'package:com_app_tienda/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class AgregarTarjetaPerfil extends StatefulWidget {
   @override
@@ -25,7 +27,11 @@ class AgregarTarjetaPerfilState extends State<AgregarTarjetaPerfil> {
           ),
           leading: GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.fade,
+                      child: HomePage(initialTab: 3)));
             },
             child: Icon(
               Icons.keyboard_backspace,

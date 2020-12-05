@@ -15,33 +15,25 @@ class AgregarTarjetaState extends State<AgregarTarjeta> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Color(0xFFff9100),
-          title: Text(
-            "Seleccion de Tarjeta",
-            style: TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.w800,
-            ),
+        automaticallyImplyLeading: false,
+        backgroundColor: Color(0xFFff9100),
+        title: Text(
+          "Seleccion de Tarjeta",
+          style: TextStyle(
+            fontSize: 23,
+            fontWeight: FontWeight.w800,
           ),
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              Icons.keyboard_backspace,
-              color: Color(0xFFFFFFFF),
-            ),
+        ),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.keyboard_backspace,
+            color: Color(0xFFFFFFFF),
           ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add, color: Colors.white),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CardType()));
-              },
-            )
-          ]),
+        ),
+      ),
       resizeToAvoidBottomInset: true,
       body: CardList(),
       bottomSheet: Card(

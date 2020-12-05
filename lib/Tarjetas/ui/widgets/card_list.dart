@@ -122,25 +122,47 @@ class CardFrontList extends StatelessWidget {
       ),
     );
 
-    return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          color: cardModel.cardColor,
-        ),
-        child: RotatedBox(
-          quarterTurns: 3,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              _cardLogo,
-              CardChip(),
-              _cardNumber,
-              _cardLastNumber,
-              _cardValidThru,
-              _cardOwner,
-            ],
+    return GestureDetector(
+      onTap: () {
+        print('aqui');
+      },
+      child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            color: _selectColor(cardModel.cardColor),
           ),
-        ));
+          child: RotatedBox(
+            quarterTurns: 3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                _cardLogo,
+                CardChip(),
+                _cardNumber,
+                _cardLastNumber,
+                _cardValidThru,
+                _cardOwner,
+              ],
+            ),
+          )),
+    );
+  }
+
+  Color _selectColor(String color) {
+    if (color.toString() == 'Color(0xff3d84df)') {
+      return Color.fromRGBO(61, 132, 223, 1.0);
+    }
+
+    if (color == 'Color(0xff7247c8)') return Color.fromRGBO(114, 71, 200, 1.0);
+    if (color == 'Color(0xff6abc79)') return Color.fromRGBO(106, 188, 121, 1.0);
+    if (color == 'Color(0xffe55c83)') return Color.fromRGBO(229, 92, 131, 1.0);
+    if (color == 'Color(0xff60c8e3)') return Color.fromRGBO(96, 200, 227, 1.0);
+    if (color == 'Color(0xffdb9d50)') return Color.fromRGBO(219, 157, 80, 1.0);
+    if (color.toString() == 'Color(0xff3c3d3f)')
+      return Color.fromRGBO(60, 61, 63, 1.0);
+    if (color == 'Color(0xffde5874)') return Color.fromRGBO(222, 88, 116, 1.0);
+    if (color == 'Color(0xff80b6ea)') return Color.fromRGBO(128, 182, 234, 1.0);
+    return Color(0xFFff9100);
   }
 
   Widget _buildDots() {

@@ -22,7 +22,7 @@ class CardResults{
   String cardMonth;
   String cardYear;
   String cardCvv;
-  Color cardColor;
+  String cardColor;
   String cardType;
 
   CardResults(

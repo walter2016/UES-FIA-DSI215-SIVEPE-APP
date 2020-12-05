@@ -1,5 +1,6 @@
-import 'package:com_app_tienda/Pago/AgregarTarjeta.dart';
+import 'package:com_app_tienda/Pago/AgregarTarjetaPerfil.dart';
 import 'package:flutter/material.dart';
+
 import '../ui/widgets/card_front.dart';
 import '../ui/widgets/my_appbar.dart';
 import '../blocs/card_bloc.dart';
@@ -34,8 +35,8 @@ class _CardWallet extends State<CardWallet> with TickerProviderStateMixin {
     opacityAnimation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         bloc.saveCard();
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AgregarTarjeta()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AgregarTarjetaPerfil()));
       }
     });
 
