@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:com_app_tienda/Cart/blocs/cart_event.dart';
 import 'package:com_app_tienda/Cart/blocs/cart_state.dart';
+import 'package:com_app_tienda/Cart/resources/cart_repository.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  CartBloc() : super(CartState([]));
+  CartBloc({CartState state}) : super(state);
+  CartRepository cartRepository = new CartRepository();
 
   @override
   Stream<CartState> mapEventToState(CartEvent event) async* {
@@ -27,7 +29,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       lines.insert(index, newLine);
       lines.removeAt(index + 1);
     }
-    yield CartState(lines);
+    CartState newState = CartState(lines);
+    cartRepository.saveCart(newState);
+    yield newState;
   }
 
   Stream<CartState> _mapRemoveProductFromCartState(
@@ -47,6 +51,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     } else if (line.quantity == 1) {
       lines.removeAt(index);
     }
-    yield CartState(lines);
+    CartState newState = CartState(lines);
+    cartRepository.saveCart(newState);
+    yield newState;
   }
 }
