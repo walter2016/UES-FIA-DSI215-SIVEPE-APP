@@ -19,7 +19,7 @@ class CardBloc with Validators implements BlocBase {
   BehaviorSubject<int> _cardColorIndexSelected =
       BehaviorSubject<int>(seedValue: 0);
 
-  final _cardsColors =  BehaviorSubject<List<CardColorModel>>();
+  final _cardsColors = BehaviorSubject<List<CardColorModel>>();
 
   //Add data stream
   Function(String) get changeCardHolderName => _cardHolderName.sink.add;
@@ -51,15 +51,9 @@ class CardBloc with Validators implements BlocBase {
     final data = shared.getString("tarjeta");
 
     if (data == null) {
-      // print('la data esta vacia');
       final list = [];
       final json = jsonEncode(list);
       shared.setString("tarjeta", json);
-      // final prueba = shared.getString("tarjeta");
-      // print('Se crea la data');
-      // print(prueba);
-      // print('imprimimimos');
-//print(jsonDecode(prueba));
     }
     final dataL = shared.getString("tarjeta");
     final decoded = jsonDecode(dataL) as List;
@@ -81,18 +75,18 @@ class CardBloc with Validators implements BlocBase {
     final listTarjetas = {"cardResults": decodeList};
 
     shared.setString("Listatarjeta", jsonEncode(listTarjetas));
-    //  print(listTarjetas);
+
     cardListBloc.initialData();
   }
 
-  void selectCardColor(int colorIndex){
+  void selectCardColor(int colorIndex) {
     CardColor.cardColors.forEach((element) => element.isSelected = false);
     CardColor.cardColors[colorIndex].isSelected = true;
     _cardsColors.sink.add(CardColor.cardColors);
     _cardColorIndexSelected.sink.add(colorIndex);
   }
 
-  void dispose(){
+  void dispose() {
     _cardHolderName.close();
     _cardNumber.close();
     _cardMonth.close();
@@ -102,5 +96,4 @@ class CardBloc with Validators implements BlocBase {
     _cardColorIndexSelected.close();
     _cardType.close();
   }
-
 }

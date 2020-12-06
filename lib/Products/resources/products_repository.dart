@@ -10,9 +10,7 @@ class ProductsRepository {
   Future<BuiltList<ProductEntity>> getProducts() async {
     final shared = await SharedPreferences.getInstance();
     final token = shared.getString('token');
-    Options options = new Options(headers: {
-      'Authorization': 'Bearer $token'
-    });
+    Options options = new Options(headers: {'Authorization': 'Bearer $token'});
     final Response response = await dio.get('productos', options: options);
     return deserializeListOf<ProductEntity>(response.data);
   }
@@ -20,20 +18,20 @@ class ProductsRepository {
   Future<BuiltList<ProductEntity>> getProductsByCategory(int categoryId) async {
     final shared = await SharedPreferences.getInstance();
     final token = shared.getString('token');
-    Options options = new Options(headers: {
-      'Authorization': 'Bearer $token'
-    });
-    final Response response = await dio.get('Productos?categoria=$categoryId', options: options);
+    Options options = new Options(headers: {'Authorization': 'Bearer $token'});
+    final Response response =
+        await dio.get('Productos?categoria=$categoryId', options: options);
     return deserializeListOf<ProductEntity>(response.data);
   }
-  
-  Future<BuiltList<ProductEntity>> getProductsByCategoryId(int categoryId) async {
+
+  Future<BuiltList<ProductEntity>> getProductsByCategoryId(
+      int categoryId) async {
     final shared = await SharedPreferences.getInstance();
     final token = shared.getString('token');
-    Options options = new Options(headers: {
-      'Authorization': 'Bearer $token'
-    });
-    final Response response = await dio.get('productos?categoria=$categoryId', options: options);
+    Options options = new Options(headers: {'Authorization': 'Bearer $token'});
+    final Response response =
+        await dio.get('productos?categoria=$categoryId', options: options);
+    print(deserializeListOf<ProductEntity>(response.data));
     return deserializeListOf<ProductEntity>(response.data);
   }
 }

@@ -3,7 +3,6 @@ import 'package:com_app_tienda/utilities/serializers.dart';
 import 'package:equatable/equatable.dart';
 
 class CartState extends Equatable {
-
   final List<CartLine> lines;
   CartState(this.lines);
 
@@ -15,14 +14,14 @@ class CartState extends Equatable {
 
   num get total {
     num total = 0;
-    for(CartLine line in lines) {
+    for (CartLine line in lines) {
       total += line.quantity * line.product.precio;
     }
     return total;
   }
 
   bool isProductOnCart(int id) {
-    for(CartLine line in lines) {
+    for (CartLine line in lines) {
       if (line.product.id == id) {
         return true;
       }
@@ -38,7 +37,7 @@ class CartState extends Equatable {
 class CartLine extends Equatable {
   final ProductEntity product;
   final int quantity;
-  CartLine({ this.product, this.quantity });
+  CartLine({this.product, this.quantity});
 
   @override
   List<Object> get props => [product, quantity];
