@@ -22,6 +22,7 @@ Future<void> main() async {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   firebaseAuth.idTokenChanges().listen((event) {
     event.getIdToken().then((token) {
+      print(token);
       SharedPreferences.getInstance().then((SharedPreferences shared) {
         shared.setString('token', token);
       });
