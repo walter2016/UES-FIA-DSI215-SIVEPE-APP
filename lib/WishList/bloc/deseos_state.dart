@@ -3,14 +3,22 @@ import 'package:equatable/equatable.dart';
 import 'package:com_app_tienda/utilities/serializers.dart';
 
 class DeseosState extends Equatable {
-  final List<DeseoLine> lines;
-  DeseosState(this.lines);
+  
+  DeseosState();
 
   @override
-  List<Object> get props => [lines];
+  List<Object> get props => [];
 
   @override
   bool get stringify => true;
+}
+
+class ListaDeseosLoaded extends DeseosState {
+  final List<DeseoLine> lines;
+  ListaDeseosLoaded(this.lines);
+
+  @override
+  List<Object> get props => [lines];
 
   bool isProductOnWishList(int id) {
     for (DeseoLine line in lines) {
@@ -26,10 +34,23 @@ class DeseosState extends Equatable {
   }
 }
 
+class ListaDeseosLoading extends DeseosState {}
+
+class ListaDeseosError extends DeseosState {
+  final String message;
+
+  ListaDeseosError({ this.message });
+
+  @override
+  List<Object> get props => [message];
+}
+
 class DeseoLine extends Equatable {
+  final int id;
   final ProductEntity product;
 
   DeseoLine({
+    this.id,
     this.product,
   });
 

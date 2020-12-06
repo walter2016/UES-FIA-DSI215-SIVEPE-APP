@@ -24,3 +24,5 @@ class RemoveProductFromWishList extends DeseosEvent {
   @override
   List<Object> get props => [product];
 }
+
+class LoadListaDeseos extends DeseosEvent {}
