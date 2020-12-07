@@ -17,7 +17,7 @@ class CartRepository {
     List<CartLine> lines = <CartLine>[];
     final shared = await SharedPreferences.getInstance();
     final obtenerLista = shared.getString("listCart");
-    final data = jsonDecode(obtenerLista);
+    final data = jsonDecode(obtenerLista ?? "[]");
     if (data != null) {
       for (var lineMap in data) {
         CartLine line = CartLine(

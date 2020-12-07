@@ -23,12 +23,14 @@ Future<void> main() async {
   await Firebase.initializeApp();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   firebaseAuth.idTokenChanges().listen((event) {
-    event.getIdToken().then((token) {
-      print(token);
-      SharedPreferences.getInstance().then((SharedPreferences shared) {
-        shared.setString('token', token);
+    if (event != null) {
+      event.getIdToken().then((token) {
+        print(token);
+        SharedPreferences.getInstance().then((SharedPreferences shared) {
+          shared.setString('token', token);
+        });
       });
-    });
+    }
   });
   CartRepository _cartRepository = CartRepository();
   CartState initialState = await _cartRepository.getCart();
