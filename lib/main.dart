@@ -1,6 +1,7 @@
 import 'package:com_app_tienda/Animations/FadeAnimation.dart';
 import 'package:com_app_tienda/Cart/blocs/cart_bloc.dart';
 import 'package:com_app_tienda/Cart/blocs/cart_state.dart';
+import 'package:com_app_tienda/Cart/resources/cart_repository.dart';
 import 'package:com_app_tienda/Categories/bloc/categories_bloc.dart';
 import 'package:com_app_tienda/Categories/resources/category_repository.dart';
 import 'package:com_app_tienda/LoginPage.dart';
@@ -29,6 +30,8 @@ Future<void> main() async {
       });
     });
   });
+  CartRepository _cartRepository = CartRepository();
+  CartState initialState = await _cartRepository.getCart();
 
   final UserRepository userRepository =
       UserRepository(firebaseAuth: firebaseAuth);
@@ -42,7 +45,7 @@ Future<void> main() async {
         create: (BuildContext context) =>
             ProductsBloc(productsRepository: ProductsRepository()),
         child: BlocProvider(
-          create: (BuildContext context) => CartBloc(state: CartState([])),
+          create: (BuildContext context) => CartBloc(state: initialState),
           child: BlocProvider(
             create: (BuildContext context) => DeseosBloc(),
             child: App(),
