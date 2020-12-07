@@ -16,28 +16,10 @@ class CardListBloc {
   Stream<List<CardResults>> get cardList => _cardsCollection.stream;
 
   void initialData() async {
-    /*
-    // GUARDAR LA LISTA
-    final list = [];
-    final listTarjetas = {"cardResults": };
-    final json = jsonEncode(list);
-    final listjson = jsonEncode(listTarjetas);
-    // GUARDAR LA LISTA
-    final shared = await SharedPreferences.getInstance();
-    shared.setString("tarjeta", json);
-    shared..setString("Listatarjeta", listjson);
-
-    */
     final shared = await SharedPreferences.getInstance();
 
-    //print('String');
-    //print(initialData2);
-
-    //print('json');
-    // print(decodedJson2);
     var initialData = shared.getString("Listatarjeta");
-    //print('Shares Preference');
-    // print(initialData);
+
     if (initialData != null) {
       var decodedJson = jsonDecode(initialData);
       _cardResults = CardModel.fromJson(decodedJson).results;
@@ -45,15 +27,9 @@ class CardListBloc {
     }
   }
 
-  CardListBloc(){
+  CardListBloc() {
     initialData();
   }
-
-  /*void addCardToList(CardResults newCard) {
-    _cardResults.add(newCard);
-    _cardsCollection.sink.add(_cardResults);
-  }
-  */
 
   void dispose() {
     _cardsCollection.close();
