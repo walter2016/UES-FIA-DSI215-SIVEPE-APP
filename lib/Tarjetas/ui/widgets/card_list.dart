@@ -18,7 +18,7 @@ class CardList extends StatelessWidget {
       builder: (context, snapshot) {
         return Column(
           children: <Widget>[
-            snapshot.data.isEmpty
+            !snapshot.hasData || snapshot.data.isEmpty
                 ? Center(
                     child: Text('No tiene Tarjetas Agregadas'),
                   )
