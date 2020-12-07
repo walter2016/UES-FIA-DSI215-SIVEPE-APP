@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:com_app_tienda/Tarjetas/blocs/card_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/card_model.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import '../../blocs/card_list_bloc.dart';
@@ -14,7 +18,7 @@ class CardList extends StatelessWidget {
       builder: (context, snapshot) {
         return Column(
           children: <Widget>[
-            !snapshot.hasData
+            snapshot.data.isEmpty
                 ? Center(
                     child: Text('No tiene Tarjetas Agregadas'),
                   )
@@ -124,7 +128,22 @@ class CardFrontList extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        print('aqui');
+        print(cardModel.cardNumber);
+      },
+      onLongPress: () {
+        final snackBar = SnackBar(
+          content: Text(
+              'La tarjeta "${cardModel.cardHolderName}" se eliminara de la lista '),
+          action: SnackBarAction(
+            label: 'Eliminar',
+            onPressed: () {
+              print('Eliminar');
+              _deleteCard();
+            },
+          ),
+        );
+
+        Scaffold.of(context).showSnackBar(snackBar);
       },
       child: Container(
           decoration: BoxDecoration(
@@ -163,6 +182,36 @@ class CardFrontList extends StatelessWidget {
     if (color == 'Color(0xffde5874)') return Color.fromRGBO(222, 88, 116, 1.0);
     if (color == 'Color(0xff80b6ea)') return Color.fromRGBO(128, 182, 234, 1.0);
     return Color(0xFFff9100);
+  }
+
+  _deleteCard() async {
+    final shared = await SharedPreferences.getInstance();
+    final listaCard = shared.getString('tarjeta');
+    var decoded = jsonDecode(listaCard);
+
+    print('listTarjetas inicial');
+
+    dynamic a = null;
+    print(decoded);
+    decoded.forEach((element) {
+      if (element['cardHolderName'] == cardModel.cardHolderName) {
+        if (element['cardNumber'] == cardModel.cardNumber) {
+          a = element;
+        }
+      }
+    });
+
+    decoded.remove(a);
+    print('decoded');
+    print(decoded);
+    shared.setString("tarjeta", jsonEncode(decoded));
+    final data2 = shared.getString("tarjeta");
+
+    final decodeList = jsonDecode(data2) as List;
+    final listTarjetas = {"cardResults": decodeList};
+
+    shared.setString("Listatarjeta", jsonEncode(listTarjetas));
+    cardListBloc.initialData();
   }
 
   Widget _buildDots() {
