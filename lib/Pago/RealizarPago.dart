@@ -1,3 +1,4 @@
+import 'package:com_app_tienda/Address/ui/addres_list_pago.dart';
 import 'package:com_app_tienda/Address/ui/andress_list_page.dart';
 import 'package:com_app_tienda/Cart/CartItemWidget.dart';
 import 'package:com_app_tienda/Cart/product.dart';
@@ -102,7 +103,7 @@ class _RealizarPagoState extends State<RealizarPago> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return ListaAddressPage();
+                          return ListaAddressPagoPage();
                         },
                       ),
                     );

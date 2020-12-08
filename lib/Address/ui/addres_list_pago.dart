@@ -2,19 +2,19 @@ import 'package:com_app_tienda/Address/bloc/address_bloc.dart';
 import 'package:com_app_tienda/Address/resources/address_repository.dart';
 import 'package:com_app_tienda/Address/ui/andress_add_page.dart';
 import 'package:com_app_tienda/Address/ui/list_address.dart';
-import 'package:com_app_tienda/pages/home_page.dart';
+import 'package:com_app_tienda/Pago/RealizarPago.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
 
-class ListaAddressPage extends StatefulWidget {
-  ListaAddressPage({Key key}) : super(key: key);
+class ListaAddressPagoPage extends StatefulWidget {
+  ListaAddressPagoPage({Key key}) : super(key: key);
 
   @override
-  _ListaAddressPageState createState() => _ListaAddressPageState();
+  _ListaAddressPagoPageState createState() => _ListaAddressPagoPageState();
 }
 
-class _ListaAddressPageState extends State<ListaAddressPage> {
+class _ListaAddressPagoPageState extends State<ListaAddressPagoPage> {
   //List direcciones = AddressRepository.address() as List;
   @override
   Widget build(BuildContext context) {
@@ -23,13 +23,14 @@ class _ListaAddressPageState extends State<ListaAddressPage> {
         leading: new IconButton(
             icon: new Icon(Icons.keyboard_backspace, color: Color(0xFFFFFFFF)),
             onPressed: () {
-              print(context.size);
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (BuildContext context) {
-                return HomePage(
-                  initialTab: 3,
-                );
-              }));
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    print(context);
+                    return RealizarPago();
+                  },
+                ),
+              );
             }),
         actions: [
           IconButton(

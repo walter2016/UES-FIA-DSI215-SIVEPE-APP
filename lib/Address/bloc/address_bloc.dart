@@ -17,23 +17,30 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
   Stream<AddressState> mapEventToState(
     AddressEvent event,
   ) async* {
-    if (event is AddressLoaded)
+    if (event is LoadAddresses)
       yield* _mapLoadAddressToState();
     else if (event is AddAddress) {
       // yield* _mapRemoveProductFromCartState(event);
     } else if (event is RemoveAddress) {
       // yield* _mapRemoveProductFromCartState(event);
+    } else if (event is LoadAddressesSuccess) {
+      yield* _mapLoadProductsSuccess(event);
     }
   }
 
   Stream<AddressState> _mapLoadAddressToState() async* {
     yield AddressLoadInProgress();
     try {
-      final address = await addressRepository.address();
+      final address = await AddressRepository.address();
       add(LoadAddressesSuccess(address.toList()));
     } catch (e) {
       print(e);
       yield AddressLoadFailure();
     }
+  }
+
+  Stream<AddressState> _mapLoadProductsSuccess(
+      LoadAddressesSuccess event) async* {
+    yield AddressLoaded(event.address);
   }
 }

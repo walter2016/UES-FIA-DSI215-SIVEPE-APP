@@ -1,3 +1,4 @@
+import 'package:com_app_tienda/Address/bloc/address_bloc.dart';
 import 'package:com_app_tienda/Animations/FadeAnimation.dart';
 import 'package:com_app_tienda/Cart/blocs/cart_bloc.dart';
 import 'package:com_app_tienda/Cart/blocs/cart_state.dart';
@@ -50,7 +51,10 @@ Future<void> main() async {
           create: (BuildContext context) => CartBloc(state: initialState),
           child: BlocProvider(
             create: (BuildContext context) => DeseosBloc(),
-            child: App(),
+            child: BlocProvider(
+              create: (BuildContext context) => AddressBloc(),
+              child: App(),
+            ),
           ),
         ),
       ),

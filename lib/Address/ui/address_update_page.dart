@@ -3,15 +3,15 @@ import 'package:com_app_tienda/Address/resources/address_repository.dart';
 import 'package:com_app_tienda/Address/ui/andress_list_page.dart';
 import 'package:flutter/material.dart';
 
-class AddressPage extends StatefulWidget {
+class AddressUpdatePage extends StatefulWidget {
   final Address address;
-  AddressPage({this.address});
+  AddressUpdatePage({this.address});
 
   @override
-  _AddressPageState createState() => _AddressPageState();
+  _AddressUpdatePageState createState() => _AddressUpdatePageState();
 }
 
-class _AddressPageState extends State<AddressPage> {
+class _AddressUpdatePageState extends State<AddressUpdatePage> {
   final _formKey = GlobalKey<FormState>();
   final globalKey = GlobalKey<ScaffoldState>();
   final direccionController = TextEditingController();
@@ -22,6 +22,7 @@ class _AddressPageState extends State<AddressPage> {
 
   @override
   Widget build(BuildContext context) {
+    _init(widget.address);
     return Scaffold(
       key: globalKey,
       appBar: AppBar(
@@ -190,14 +191,13 @@ class _AddressPageState extends State<AddressPage> {
                           duration: Duration(seconds: 3),
                           content: Text('Direccion Guardada Correctamente'));
                       globalKey.currentState.showSnackBar(snackBar);
-                      print(direccionController.text);
+                      widget.address.direccion = direccionController.text;
+                      widget.address.numeroCasa = numeroCasaController.text;
+                      widget.address.municipio = municipioController.text;
+                      widget.address.departamento = departamentoController.text;
+                      widget.address.referencia = referenciaController.text;
 
-                      AddressRepository.insertar(Address(
-                          direccion: direccionController.text,
-                          numeroCasa: numeroCasaController.text,
-                          departamento: departamentoController.text,
-                          municipio: municipioController.text,
-                          referencia: referenciaController.text));
+                      AddressRepository.update(widget.address);
 
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -219,7 +219,7 @@ class _AddressPageState extends State<AddressPage> {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            "Guardar Dirección",
+                            "Actualizar Dirección",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
@@ -236,5 +236,13 @@ class _AddressPageState extends State<AddressPage> {
         ),
       ),
     );
+  }
+
+  _init(Address address) {
+    numeroCasaController.text = address.numeroCasa;
+    direccionController.text = address.direccion;
+    departamentoController.text = address.departamento;
+    municipioController.text = address.municipio;
+    referenciaController.text = address.referencia;
   }
 }

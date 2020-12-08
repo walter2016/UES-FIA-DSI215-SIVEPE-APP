@@ -4,7 +4,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class AddressRepository {
-  Future<Database> _openDB() async {
+  static Future<Database> _openDB() async {
+    print('se creo');
     return openDatabase(join(await getDatabasesPath(), 'tienda.db'),
         onCreate: (db, version) {
       return db.execute(
@@ -12,13 +13,13 @@ class AddressRepository {
     }, version: 1);
   }
 
-  Future<void> insertar(Address address) async {
+  static Future<void> insertar(Address address) async {
     final Database database = await _openDB();
 
     return database.insert("address", address.toJson());
   }
 
-  Future<List<Address>> address() async {
+  static Future<List<Address>> address() async {
     Database database = await _openDB();
 
     final List<Map<String, dynamic>> listaddress =
@@ -37,5 +38,18 @@ class AddressRepository {
             municipio: listaddress[i]['municipio'],
             departamento: listaddress[i]['departamento'],
             referencia: listaddress[i]['referencia']));
+  }
+
+  static Future<void> delete(Address address) async {
+    Database database = await _openDB();
+
+    return database.delete("address", where: 'id = ?', whereArgs: [address.id]);
+  }
+
+  static Future<void> update(Address address) async {
+    Database database = await _openDB();
+
+    return database.update("address", address.toJson(),
+        where: 'id = ?', whereArgs: [address.id]);
   }
 }
