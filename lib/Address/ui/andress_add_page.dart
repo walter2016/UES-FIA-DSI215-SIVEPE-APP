@@ -1,17 +1,26 @@
+import 'package:com_app_tienda/Address/model/address.dart';
+import 'package:com_app_tienda/Address/resources/address_repository.dart';
 import 'package:flutter/material.dart';
 
-class DireccionPage extends StatefulWidget {
-  DireccionPage({Key key}) : super(key: key);
+class AddressPage extends StatefulWidget {
+  AddressPage({Key key}) : super(key: key);
 
   @override
-  _DireccionPageState createState() => _DireccionPageState();
+  _AddressPageState createState() => _AddressPageState();
 }
 
-class _DireccionPageState extends State<DireccionPage> {
+class _AddressPageState extends State<AddressPage> {
   final _formKey = GlobalKey<FormState>();
   final globalKey = GlobalKey<ScaffoldState>();
+  final direccionController = TextEditingController();
+  final numeroCasaController = TextEditingController();
+  final municipioController = TextEditingController();
+  final departamentoController = TextEditingController();
+  final referenciaController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    //AddressRepository.address();
     return Scaffold(
       key: globalKey,
       appBar: AppBar(
@@ -45,6 +54,7 @@ class _DireccionPageState extends State<DireccionPage> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextFormField(
+                  controller: direccionController,
                   keyboardType: TextInputType.streetAddress,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
@@ -67,6 +77,7 @@ class _DireccionPageState extends State<DireccionPage> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextFormField(
+                  controller: numeroCasaController,
                   keyboardType: TextInputType.streetAddress,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
@@ -89,6 +100,7 @@ class _DireccionPageState extends State<DireccionPage> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextFormField(
+                  controller: municipioController,
                   keyboardType: TextInputType.streetAddress,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
@@ -111,6 +123,7 @@ class _DireccionPageState extends State<DireccionPage> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextFormField(
+                  controller: departamentoController,
                   keyboardType: TextInputType.streetAddress,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
@@ -133,6 +146,7 @@ class _DireccionPageState extends State<DireccionPage> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextFormField(
+                  controller: referenciaController,
                   keyboardType: TextInputType.streetAddress,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(15.0),
@@ -169,7 +183,9 @@ class _DireccionPageState extends State<DireccionPage> {
                           duration: Duration(seconds: 3),
                           content: Text('Direccion Guardada Correctamente'));
                       globalKey.currentState.showSnackBar(snackBar);
+                      print(direccionController.text);
                     }
+                    // print(_formKey.toString());
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(

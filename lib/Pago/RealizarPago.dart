@@ -1,7 +1,6 @@
+import 'package:com_app_tienda/Address/ui/andress_list_page.dart';
 import 'package:com_app_tienda/Cart/CartItemWidget.dart';
 import 'package:com_app_tienda/Cart/product.dart';
-import 'package:com_app_tienda/Dirreccion/andress_add_page.dart';
-import 'package:com_app_tienda/Dirreccion/andress_list_page.dart';
 import 'package:com_app_tienda/Pago/AgregarTarjeta.dart';
 
 import 'package:com_app_tienda/Pago/PagoItemWidget.dart';
@@ -103,7 +102,7 @@ class _RealizarPagoState extends State<RealizarPago> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return ListaDireccionPage();
+                          return ListaAddressPage();
                         },
                       ),
                     );

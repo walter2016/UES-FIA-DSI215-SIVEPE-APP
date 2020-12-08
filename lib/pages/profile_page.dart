@@ -1,4 +1,4 @@
-import 'package:com_app_tienda/Dirreccion/andress_list_page.dart';
+import 'package:com_app_tienda/Address/ui/andress_list_page.dart';
 import 'package:com_app_tienda/Enrollment/model/enrollment_entity.dart';
 import 'package:com_app_tienda/Enrollment/resources/EnrollmentRepository.dart';
 import 'package:com_app_tienda/Ordenes/orders.dart';
@@ -328,7 +328,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (BuildContext context) {
-                              return ListaDireccionPage();
+                              return ListaAddressPage();
                             },
                           ),
                         );
