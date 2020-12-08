@@ -28,31 +28,31 @@ class _$EnrollmentEntitySerializer
     }
     if (object.pagareUrl != null) {
       result
-        ..add('PagareUrl')
+        ..add('pagareUrl')
         ..add(serializers.serialize(object.pagareUrl,
             specifiedType: const FullType(String)));
     }
     if (object.waterBillUrl != null) {
       result
-        ..add('ReciboAguaUrl')
+        ..add('reciboAguaUrl')
         ..add(serializers.serialize(object.waterBillUrl,
             specifiedType: const FullType(String)));
     }
     if (object.energyBillUrl != null) {
       result
-        ..add('ReciboLuzUrl')
+        ..add('reciboLuzUrl')
         ..add(serializers.serialize(object.energyBillUrl,
             specifiedType: const FullType(String)));
     }
     if (object.phoneBillUrl != null) {
       result
-        ..add('ReciboTelefonoUrl')
+        ..add('reciboTelefonoUrl')
         ..add(serializers.serialize(object.phoneBillUrl,
             specifiedType: const FullType(String)));
     }
     if (object.bankReferenceUrl != null) {
       result
-        ..add('ReferenciaBancariaUrl')
+        ..add('referenciaBancariaUrl')
         ..add(serializers.serialize(object.bankReferenceUrl,
             specifiedType: const FullType(String)));
     }
@@ -93,23 +93,23 @@ class _$EnrollmentEntitySerializer
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'PagareUrl':
+        case 'pagareUrl':
           result.pagareUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'ReciboAguaUrl':
+        case 'reciboAguaUrl':
           result.waterBillUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'ReciboLuzUrl':
+        case 'reciboLuzUrl':
           result.energyBillUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'ReciboTelefonoUrl':
+        case 'reciboTelefonoUrl':
           result.phoneBillUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'ReferenciaBancariaUrl':
+        case 'referenciaBancariaUrl':
           result.bankReferenceUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
