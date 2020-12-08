@@ -1,7 +1,9 @@
+import 'package:com_app_tienda/Address/bloc/address_bloc.dart';
 import 'package:com_app_tienda/Address/model/address.dart';
 import 'package:com_app_tienda/Address/resources/address_repository.dart';
 import 'package:com_app_tienda/Address/ui/andress_list_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddressUpdatePage extends StatefulWidget {
   final Address address;
@@ -12,6 +14,7 @@ class AddressUpdatePage extends StatefulWidget {
 }
 
 class _AddressUpdatePageState extends State<AddressUpdatePage> {
+  AddressBloc addressBloc;
   final _formKey = GlobalKey<FormState>();
   final globalKey = GlobalKey<ScaffoldState>();
   final direccionController = TextEditingController();
@@ -19,6 +22,12 @@ class _AddressUpdatePageState extends State<AddressUpdatePage> {
   final municipioController = TextEditingController();
   final departamentoController = TextEditingController();
   final referenciaController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    addressBloc = BlocProvider.of<AddressBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +38,19 @@ class _AddressUpdatePageState extends State<AddressUpdatePage> {
         leading: new IconButton(
             icon: new Icon(Icons.keyboard_backspace, color: Color(0xFFFFFFFF)),
             onPressed: () {
-              Navigator.of(context).push(
+              Navigator.pop(context);
+              /*
+Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return ListaAddressPage();
+                    print(context);
+                    return RealizarPago();
                   },
                 ),
               );
+
+
+              */
             }),
         backgroundColor: Color(0xFFFF9800),
         title: const Text('Agregar Dirección'),
@@ -197,7 +212,8 @@ class _AddressUpdatePageState extends State<AddressUpdatePage> {
                       widget.address.departamento = departamentoController.text;
                       widget.address.referencia = referenciaController.text;
 
-                      AddressRepository.update(widget.address);
+                      addressBloc.add(UpdateAddress(widget.address));
+                      // AddressRepository.update(widget.address);
 
                       Navigator.of(context).push(
                         MaterialPageRoute(

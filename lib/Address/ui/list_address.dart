@@ -4,20 +4,34 @@ import 'package:com_app_tienda/Address/resources/address_repository.dart';
 import 'package:com_app_tienda/Address/ui/address_update_page.dart';
 import 'package:com_app_tienda/Address/ui/andress_add_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ListAddress extends StatelessWidget {
+class ListAddress extends StatefulWidget {
   final List<Address> address;
   const ListAddress(this.address);
 
   @override
+  _ListAddressState createState() => _ListAddressState();
+}
+
+class _ListAddressState extends State<ListAddress> {
+  AddressBloc addressBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    addressBloc = BlocProvider.of<AddressBloc>(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (address.length == 0) {
+    if (widget.address.length == 0) {
       return Center(
         child: Text('No tiene direcciones'),
       );
     }
     return ListView.builder(
-      itemCount: address.length,
+      itemCount: widget.address.length,
       itemBuilder: (_, i) => _createItem(context, i),
     );
   }
@@ -35,14 +49,14 @@ class ListAddress extends StatelessWidget {
           ),
         ),
         onDismissed: (direction) {
-          print(direction);
-          AddressRepository.delete(address[i]);
+          addressBloc.add(RemoveAddress(widget.address[i]));
+          // AddressRepository.delete(widget.address[i]);
         },
         child: ListTile(
-          title: new Text(
-              '${address[i].direccion},' + ' ${address[i].numeroCasa}'),
-          subtitle: new Text(
-              '${address[i].departamento},' + ' ${address[i].municipio}'),
+          title: new Text('${widget.address[i].direccion},' +
+              ' ${widget.address[i].numeroCasa}'),
+          subtitle: new Text('${widget.address[i].departamento},' +
+              ' ${widget.address[i].municipio}'),
           leading: new Icon(Icons.location_on),
           onTap: () {
             Navigator.of(context).push(
@@ -50,7 +64,7 @@ class ListAddress extends StatelessWidget {
                 builder: (BuildContext context) {
                   print(context);
                   return AddressUpdatePage(
-                    address: address[i],
+                    address: widget.address[i],
                   );
                 },
               ),

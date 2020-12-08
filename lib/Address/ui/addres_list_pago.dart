@@ -23,7 +23,9 @@ class _ListaAddressPagoPageState extends State<ListaAddressPagoPage> {
         leading: new IconButton(
             icon: new Icon(Icons.keyboard_backspace, color: Color(0xFFFFFFFF)),
             onPressed: () {
-              Navigator.of(context).push(
+              Navigator.pop(context);
+              /*
+Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
                     print(context);
@@ -31,6 +33,9 @@ class _ListaAddressPagoPageState extends State<ListaAddressPagoPage> {
                   },
                 ),
               );
+
+
+              */
             }),
         actions: [
           IconButton(
@@ -47,7 +52,7 @@ class _ListaAddressPagoPageState extends State<ListaAddressPagoPage> {
               })
         ],
         backgroundColor: Color(0xFFFF9800),
-        title: const Text('Direcciones'),
+        title: const Text('Direcciones Pago'),
       ),
       body: _AddressPage(),
     );

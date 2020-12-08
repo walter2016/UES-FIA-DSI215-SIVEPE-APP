@@ -1,7 +1,9 @@
+import 'package:com_app_tienda/Address/bloc/address_bloc.dart';
 import 'package:com_app_tienda/Address/model/address.dart';
 import 'package:com_app_tienda/Address/resources/address_repository.dart';
 import 'package:com_app_tienda/Address/ui/andress_list_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddressPage extends StatefulWidget {
   final Address address;
@@ -12,6 +14,7 @@ class AddressPage extends StatefulWidget {
 }
 
 class _AddressPageState extends State<AddressPage> {
+  AddressBloc addressBloc;
   final _formKey = GlobalKey<FormState>();
   final globalKey = GlobalKey<ScaffoldState>();
   final direccionController = TextEditingController();
@@ -19,6 +22,12 @@ class _AddressPageState extends State<AddressPage> {
   final municipioController = TextEditingController();
   final departamentoController = TextEditingController();
   final referenciaController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    addressBloc = BlocProvider.of<AddressBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -192,12 +201,12 @@ class _AddressPageState extends State<AddressPage> {
                       globalKey.currentState.showSnackBar(snackBar);
                       print(direccionController.text);
 
-                      AddressRepository.insertar(Address(
+                      addressBloc.add(AddAddress(Address(
                           direccion: direccionController.text,
                           numeroCasa: numeroCasaController.text,
                           departamento: departamentoController.text,
                           municipio: municipioController.text,
-                          referencia: referenciaController.text));
+                          referencia: referenciaController.text)));
 
                       Navigator.of(context).push(
                         MaterialPageRoute(

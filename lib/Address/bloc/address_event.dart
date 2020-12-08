@@ -23,6 +23,14 @@ class RemoveAddress extends AddressEvent {
   List<Object> get props => [adrress];
 }
 
+class UpdateAddress extends AddressEvent {
+  final Address adrress;
+  UpdateAddress(this.adrress);
+
+  @override
+  List<Object> get props => [adrress];
+}
+
 class LoadAddresses extends AddressEvent {}
 
 class LoadAddressesSuccess extends AddressEvent {
