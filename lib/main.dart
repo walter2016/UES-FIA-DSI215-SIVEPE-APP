@@ -6,6 +6,8 @@ import 'package:com_app_tienda/Cart/resources/cart_repository.dart';
 import 'package:com_app_tienda/Categories/bloc/categories_bloc.dart';
 import 'package:com_app_tienda/Categories/resources/category_repository.dart';
 import 'package:com_app_tienda/LoginPage.dart';
+import 'package:com_app_tienda/Ordenes/bloc/order_bloc.dart';
+import 'package:com_app_tienda/Ordenes/resources/order_repository.dart';
 import 'package:com_app_tienda/Products/bloc/products_bloc.dart';
 import 'package:com_app_tienda/Products/resources/products_repository.dart';
 import 'package:com_app_tienda/Users/blocs/authentication_bloc.dart';
@@ -38,6 +40,9 @@ Future<void> main() async {
 
   final UserRepository userRepository =
       UserRepository(firebaseAuth: firebaseAuth);
+
+  OrderRepository orderRepository = OrderRepository();
+  
   return runApp(BlocProvider(
     create: (BuildContext context) =>
         AuthenticationBloc(userRepository: userRepository),
@@ -53,7 +58,10 @@ Future<void> main() async {
             create: (BuildContext context) => DeseosBloc(),
             child: BlocProvider(
               create: (BuildContext context) => AddressBloc(),
-              child: App(),
+              child: BlocProvider(
+                create: (BuildContext context) => OrderBloc(orderRepository),
+                child: App(),
+              ),
             ),
           ),
         ),
